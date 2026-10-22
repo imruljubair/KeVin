@@ -21,7 +21,7 @@ explicitly allowed static route under the existing security policy. Its source a
 under `web/fonts/`.
 
 Exact pre-change copies of `web/index.html`, `web/app.js`, and `web/style.css`
-plus `kavin/server.py` are in `docs/style-backups/before-architects-daughter/`. Prefer the internal attribute setting for
+plus `kevin/server.py` (originally `kavin/server.py`) are in `docs/style-backups/before-architects-daughter/`. Prefer the internal attribute setting for
 visual undo/redo. Restoring those files also discards subsequent edits to them.
 
 An already running server needs a restart to enable the new static font route.

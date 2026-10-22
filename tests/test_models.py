@@ -1,7 +1,7 @@
 import struct
 import unittest
 
-from kavin.models import MAX_FILE, normalize_url, parse_header, validate
+from kevin.models import MAX_FILE, normalize_url, parse_header, validate
 
 
 def header_fixture():

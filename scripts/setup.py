@@ -27,7 +27,7 @@ def main():
         subprocess.run(["git", "-C", str(source), "checkout", "--detach", REVISION], check=True)
     subprocess.run(["cmake", "-S", str(ROOT), "-B", str(ROOT / "build"), "-DCMAKE_BUILD_TYPE=Release"], check=True)
     subprocess.run(["cmake", "--build", str(ROOT / "build"), "--target", "kavin-engine", "-j", str(min(8, os.cpu_count() or 2))], check=True)
-    print("Ready. Run: python3 -m kavin.server")
+    print("Ready. Run: python3 -m kevin")
 
 
 if __name__ == "__main__":

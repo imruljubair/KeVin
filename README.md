@@ -25,12 +25,12 @@ Requires Python 3.10+, Git, CMake 3.20+, and a C++17 compiler. On macOS, install
 git clone https://github.com/imruljubair/KeVin.git
 cd KeVin
 python3 scripts/setup.py
-python3 -m kavin.server
+python3 -m kevin
 ```
 
 Open <http://127.0.0.1:8765>. On macOS, `run.command` also starts an already built app.
 
-If port 8765 is already in use, KeVin may already be running; open that URL instead of launching it again. To start a separate instance on an available port, run `python3 -m kavin --port 0` and open the URL it prints.
+If port 8765 is already in use, KeVin may already be running; open that URL instead of launching it again. To start a separate instance on an available port, run `python3 -m kevin --port 0` and open the URL it prints.
 
 1. Click **Choose a model**.
 2. Choose a model (or select **Use a GGUF link…**) and click **Load model**. Compatibility checks run automatically before downloading.
@@ -49,7 +49,7 @@ This is a public GGUF conversion of [HuggingFaceTB/SmolLM2-135M](https://hugging
 To start with a local file:
 
 ```bash
-python3 -m kavin.server --model models/SmolLM2-135M-Q8_0.gguf
+python3 -m kevin --model models/SmolLM2-135M-Q8_0.gguf
 ```
 
 The app runs one shared local model/session. Different browser tabs use that same session. Downloads are stored in `models/` and reused. The server listens only on loopback. Restarting requires selecting the model again, or passing `--model`; restarting does not redownload cached files.

@@ -223,7 +223,7 @@ def main():
             raise
         parser.exit(2, f"Port {args.port} is already in use. KeVin may already be running.\n"
                        f"Open http://127.0.0.1:{args.port}\n"
-                       "For a separate instance on a free port, run: python3 -m kavin --port 0\n")
+                       "For a separate instance on a free port, run: python3 -m kevin --port 0\n")
     server.daemon_threads = True
     server.app = App()
     if args.model:

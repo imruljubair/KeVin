@@ -24,7 +24,7 @@ path such as `/KeVin/`. It uses relative asset/data links and has no backend API
 dependency. A current browser with `DecompressionStream` support is required
 for the gzip recordings. The app reports an actionable error if unsupported.
 
-The local `python3 -m kavin` app does not load `demo.js` and has no demo limits.
+The local `python3 -m kevin` app does not load `demo.js` and has no demo limits.
 
 ## Refresh the recording
 
