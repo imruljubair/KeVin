@@ -15,3 +15,10 @@ The repository contains recorded intermediate tensors and retained projection
 weight slices for visualization, not the model GGUF. Capture metadata and the
 model source are stored in `demo/data/manifest.json`.
 
+
+## React and D3 frontend
+
+React, React DOM, and Scheduler are distributed under the MIT license.
+D3 modules are distributed under ISC or their included licenses.
+The build collects bundled dependency license texts in `web/vendor-licenses.txt`;
+exact dependency versions are pinned in `package-lock.json`.

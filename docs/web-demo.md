@@ -15,6 +15,8 @@ trace export work in the browser. Exported traces include recording metadata.
 ## Build and preview
 
 ```sh
+npm ci
+npm run build
 python3 scripts/build_pages.py
 python3 -m http.server 8793 --directory _site
 ```
@@ -33,7 +35,7 @@ After building the real engine and downloading the supported model:
 ```sh
 python3 scripts/record_demo.py --model models/SmolLM2-135M-Q8_0.gguf
 python3 scripts/build_pages.py
-node --test tests/demo.test.cjs tests/matrix_proxy.test.cjs
+npm test
 ```
 
 The recorder uses a separate engine process, so it does not change a running

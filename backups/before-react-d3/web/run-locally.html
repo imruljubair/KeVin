@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en" data-font-style="architects-daughter">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Run KeVin locally</title><link rel="icon" href="favicon.svg"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="guide.css"></head>
+<body class="install-guide"><main>
+<a class="back" href="./">← Back to KeVin</a>
+<span class="eyebrow">THE FULL LOCAL VERSION</span><h1>Make the prompt your own.</h1>
+<p class="lead">Edit prefill text, load supported GGUF models, and generate beyond the web demo’s five recorded tokens. Your model runs on your computer.</p>
+<div class="requirements"><b>You’ll need</b><p>Python 3.10+, Git, CMake 3.20+, a C++17 compiler, and an internet connection for the initial setup and model download. The default context is 128 tokens.</p></div>
+<section><h2>1. Install the build tools</h2><h3>macOS</h3><p>Install the Xcode command line tools:</p><pre><code>xcode-select --install</code></pre><p>Install Python 3 and CMake from their official installers, or use Homebrew if you already have it:</p><pre><code>brew install python cmake</code></pre><h3>Ubuntu / Debian, or Windows with WSL2 Ubuntu</h3><pre><code>sudo apt update
+sudo apt install python3 git cmake build-essential</code></pre><p>On Windows, run the remaining commands inside your WSL2 Ubuntu terminal.</p></section>
+<section><h2>2. Get KeVin</h2><p>Clone the repository, or use GitHub Desktop’s <b>Clone repository</b> and open a terminal in that folder.</p><pre><code>git clone https://github.com/imruljubair/KeVin.git
+cd KeVin</code></pre><p><a href="https://github.com/imruljubair/KeVin">View the source on GitHub ↗</a></p></section>
+<section><h2>3. Build the inference engine</h2><pre><code>python3 scripts/setup.py</code></pre><p>This downloads the pinned llama.cpp source and builds KeVin’s inspection engine. It can take a few minutes. There are no pip or npm dependencies.</p></section>
+<section><h2>4. Start KeVin</h2><pre><code>python3 -m kevin</code></pre><p>Open <a href="http://127.0.0.1:8765/">http://127.0.0.1:8765/</a>. Keep the terminal open while using KeVin. Stop it with <b>Ctrl+C</b>.</p><p>If that port is occupied, select an available port automatically:</p><pre><code>python3 -m kevin --port 0</code></pre></section>
+<section><h2>5. Load a model and explore</h2><p>Choose <b>SmolLM2 135M</b> in the model picker, then click <b>Load model</b>. Enter your own prompt and click <b>Prefill</b>. Generate tokens one at a time or use Play.</p><p>Other supported GGUF models are available in the picker. Downloads are stored locally and reused. Generation is bounded by the model context, available memory, and end-of-sequence tokens.</p></section>
+<section><h2>If something doesn’t start</h2><ul><li><b>Missing compiler or CMake:</b> finish step 1, open a new terminal, then rerun setup.</li><li><b>Engine is not built:</b> run <code>python3 scripts/setup.py</code> from the repository folder.</li><li><b>Port already in use:</b> use <code>--port 0</code> and open the address printed in the terminal.</li><li><b>A model fails to load:</b> start with the recommended SmolLM2 135M model and check the terminal or <code>engine.log</code>.</li></ul></section>
+<footer>Web demo: recorded inference. Local version: live inference on your machine. <a href="./">Return to the demo →</a></footer>
+</main></body></html>

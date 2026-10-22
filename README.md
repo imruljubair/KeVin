@@ -17,9 +17,14 @@ KeVin uses the visualization style of `littleLLAMA/out/llama-34324/full-forward-
 **Fonts:** Architects Daughter is the active style. The original style is preserved
 behind an internal code setting; see [appearance and undo/redo](docs/appearance.md).
 
+The frontend uses React + D3 with Canvas/SVG matrix rendering. The compiled
+bundle is included, so `python3 -m kevin` still works without installing Node.js.
+For frontend development and the saved original implementation, see
+[React + D3 and restoration](docs/react-d3.md).
+
 ## Start
 
-Requires Python 3.10+, Git, CMake 3.20+, and a C++17 compiler. On macOS, install the Xcode command line tools if needed. The Python server uses the standard library; there are no pip or npm dependencies.
+Requires Python 3.10+, Git, CMake 3.20+, and a C++17 compiler. On macOS, install the Xcode command line tools if needed. The Python server uses the standard library; running the app needs no pip or npm installation.
 
 ```bash
 git clone https://github.com/imruljubair/KeVin.git

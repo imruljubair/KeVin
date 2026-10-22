@@ -25,9 +25,7 @@
       recording: {mode: 'recorded-inference', step: currentStep, limit: m.generationLimit}};
   }
   function localOnly(reason = 'This feature is available when running KeVin locally.') {
-    document.querySelector('#local-only-description').textContent = reason;
-    const dialog = document.querySelector('#local-only-dialog');
-    if (!dialog.open) dialog.showModal();
+    window.KevinUI.set({localOnlyMessage:reason,localOnlyOpen:true});
   }
   function atLimit() { return Boolean(manifest && currentStep >= manifest.generationLimit); }
   async function request(path, command) {
@@ -49,54 +47,9 @@
     } else throw Error('Unsupported demo operation.');
     return view();
   }
-  function refreshControls(state) {
-    const limit = atLimit();
-    const prompt = document.querySelector('#prompt');
-    prompt.readOnly = true;
-    prompt.setAttribute('aria-readonly', 'true');
-    for (const id of ['step', 'play']) {
-      const control = document.querySelector('#' + id);
-      control.classList.toggle('local-only', limit);
-      control.setAttribute('aria-description', limit ? 'Local only. Activate for installation instructions.' : 'Recorded inference.');
-      if (limit) {
-        control.disabled = state.busy;
-        control.title = 'Local only · run locally to generate more tokens';
-      } else control.title = id === 'step' ? 'Reveal the next recorded token' : 'Play recorded tokens';
-    }
-    document.querySelector('#step').innerHTML = limit ? 'Generate more · local only <span>→</span>' : 'Generate next token <span>→</span>';
-    document.querySelector('#prefill').title = 'Replay the fixed recorded prefill from the beginning';
-  }
   function afterRender() {
-    document.querySelector('#status').textContent = `Recorded inference · ${currentStep}/${manifest.generationLimit} generated tokens`;
-    document.querySelector('#metrics').textContent += ' · RECORDED';
+    window.KevinUI.set({status:`Recorded inference · ${currentStep}/${manifest.generationLimit} generated tokens`,
+      metrics:window.KevinUI.getSnapshot().metrics+' · RECORDED'});
   }
-  function initUI() {
-    document.body.classList.add('web-demo');
-    const badge = document.querySelector('.local-badge');
-    badge.textContent = 'RECORDED DEMO';
-    const guide = document.createElement('a');
-    guide.className = 'run-local-link'; guide.href = 'run-locally.html'; guide.textContent = 'Run locally ↗';
-    document.querySelector('#about-button').before(guide);
-    const dialog = document.createElement('dialog');
-    dialog.id = 'local-only-dialog'; dialog.setAttribute('aria-labelledby', 'local-only-title');
-    dialog.innerHTML = '<form method="dialog"><button class="dialog-close icon-button" aria-label="Close local version information">×</button></form><span class="eyebrow">LOCAL ONLY</span><h1 id="local-only-title">Run KeVin locally.</h1><p id="local-only-description"></p><p>The web demo explores a real SmolLM2 135M recording with a fixed prompt and five generated tokens. Your local version supports custom prompts, other models, and further generation.</p><a class="run-local-link primary-link" href="run-locally.html">Run locally →</a>';
-    document.body.append(dialog);
-    const model = document.querySelector('#model-button');
-    model.classList.add('local-only'); model.title = 'Local only · load another model'; model.setAttribute('aria-description', 'Local only. Activate for installation instructions.');
-    const input = document.querySelector('#prompt');
-    input.readOnly = true; input.classList.add('local-only'); input.title = 'Fixed demo prompt · edit prompts in the local version';
-    input.addEventListener('click', () => localOnly('Run KeVin locally to enter your own prefill text.'));
-    input.addEventListener('keydown', event => {
-      if (event.key.length === 1 && !event.ctrlKey && !event.metaKey || ['Backspace', 'Delete'].includes(event.key)) {
-        event.preventDefault(); localOnly('Run KeVin locally to enter your own prefill text.');
-      }
-    });
-    const promptLabel = document.querySelector('label[for="prompt"]'); promptLabel.textContent = 'Prompt · local only';
-    document.querySelector('#prefill').innerHTML = 'Replay prefill <span>↵</span>';
-    document.querySelector('#scale-note').textContent = 'Recorded inference · fixed prompt · 5 generated tokens';
-    const about = document.createElement('p');
-    about.textContent = 'Web demo: all displayed data comes from a saved real SmolLM2 135M inference session. Generate reveals up to five recorded tokens; it does not run a model in your browser. Run locally for live inference.';
-    document.querySelector('#about-title').after(about);
-  }
-  window.KevinDemo = {request, localOnly, atLimit, refreshControls, afterRender, initUI};
+  window.KevinDemo = {request, localOnly, atLimit, afterRender};
 })();

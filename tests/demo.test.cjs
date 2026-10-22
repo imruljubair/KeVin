@@ -11,7 +11,9 @@ function demo() {
     '#local-only-dialog': {open: false, showModal() { this.open = true; }},
   };
   const requests = [];
-  const context = {window: {DecompressionStream}, Response, DecompressionStream,
+  const context = {window: {DecompressionStream, KevinUI: {
+      set(patch){if(patch.localOnlyMessage)nodes['#local-only-description'].textContent=patch.localOnlyMessage;if(patch.localOnlyOpen)nodes['#local-only-dialog'].showModal();},
+    }}, Response, DecompressionStream,
     document: {querySelector: selector => nodes[selector]},
     fetch: async url => {
       requests.push(url);
