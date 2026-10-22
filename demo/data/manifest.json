@@ -1,0 +1,240 @@
+{
+  "schema": "kevin-recorded-demo-v1",
+  "model": {
+    "name": "SmolLM2-135M",
+    "architecture": "llama",
+    "layers": 30,
+    "heads": 9,
+    "kv_heads": 3,
+    "head_dim": 64,
+    "context": 128,
+    "parameters": 134515008,
+    "backend": "llama.cpp \u00b7 CPU inspection",
+    "cache_type": "F16"
+  },
+  "prompt": "Once upon a time",
+  "generationLimit": 5,
+  "frames": [
+    {
+      "tokens": [
+        {
+          "id": 6403,
+          "text": "Once"
+        },
+        {
+          "id": 1980,
+          "text": " upon"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 655,
+          "text": " time"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 58.35925,
+      "cache_prefix_verified": false,
+      "logical_cache_bytes": 92160,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 6403,
+          "text": "Once"
+        },
+        {
+          "id": 1980,
+          "text": " upon"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 655,
+          "text": " time"
+        },
+        {
+          "id": 28,
+          "text": ","
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 114.941084,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 115200,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 6403,
+          "text": "Once"
+        },
+        {
+          "id": 1980,
+          "text": " upon"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 655,
+          "text": " time"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 665,
+          "text": " there"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 171.228834,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 138240,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 6403,
+          "text": "Once"
+        },
+        {
+          "id": 1980,
+          "text": " upon"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 655,
+          "text": " time"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 665,
+          "text": " there"
+        },
+        {
+          "id": 436,
+          "text": " was"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 223.962542,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 161280,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 6403,
+          "text": "Once"
+        },
+        {
+          "id": 1980,
+          "text": " upon"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 655,
+          "text": " time"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 665,
+          "text": " there"
+        },
+        {
+          "id": 436,
+          "text": " was"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 273.726875,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 184320,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 6403,
+          "text": "Once"
+        },
+        {
+          "id": 1980,
+          "text": " upon"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 655,
+          "text": " time"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 665,
+          "text": " there"
+        },
+        {
+          "id": 436,
+          "text": " was"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 1838,
+          "text": " little"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 333.344208,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 207360,
+      "ok": true
+    }
+  ],
+  "capturedAt": "2026-10-22T02:02:16.763585+00:00",
+  "source": {
+    "file": "SmolLM2-135M-Q8_0.gguf",
+    "url": "https://huggingface.co/ggml-org/SmolLM2-135M-GGUF/resolve/main/SmolLM2-135M-Q8_0.gguf"
+  }
+}

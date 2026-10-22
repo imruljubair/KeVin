@@ -1,0 +1,11 @@
+.deps/
+build/
+models/*
+!models/.gitkeep
+__pycache__/
+.venv/
+.DS_Store
+*.log
+test-results/
+
+_site/
