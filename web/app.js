@@ -291,8 +291,12 @@ function drawBlock(block,column){
   foregroundName.title=`${foregroundName.textContent} · click to show related matrices`;
   const centered=Boolean(p.rowGap||p.colGap);
   foregroundName.classList.toggle('centered-name',centered);
-  const sideInset=['scores','a'].includes(block.key)?(p.rows===1?6:11+String(p.rows).length*4.4):(p.rows===1?13:29);
-  const nameX=centered?p.padX+(p.colGap?p.colIndices.indexOf(null)+.5:p.colIndices.length/2)*p.cellWidth:p.padX-sideInset;
+  const ownEdgeName=['scores','a'].includes(block.key)&&!centered;
+  foregroundName.classList.toggle('own-edge-name',ownEdgeName);
+  const sideInset=p.rows===1?13:29;
+  // Scores and A straddle their own left edge, with most of the label inside
+  // that matrix instead of extending toward the preceding K/Q matrix.
+  const nameX=centered?p.padX+(p.colGap?p.colIndices.indexOf(null)+.5:p.colIndices.length/2)*p.cellWidth:ownEdgeName?p.padX:p.padX-sideInset;
   const nameY=p.padY+(p.rowGap?p.rowIndices.indexOf(null)+.5:p.rowIndices.length/2)*p.cellHeight;
   position(foregroundName,block.x+nameX,block.y+nameY);
   block.nameNode=foregroundName;
