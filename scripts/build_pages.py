@@ -28,7 +28,7 @@ def build(output):
         shutil.rmtree(output)
     output.mkdir(parents=True)
     (output / '.kevin-pages-build').touch()
-    for name in ['style.css', 'app.js', 'matrix_proxy.js', 'favicon.svg', 'demo.js', 'demo.css', 'run-locally.html', 'guide.css', 'vendor-licenses.txt']:
+    for name in ['style.css', 'appearance.css', 'app.js', 'matrix_proxy.js', 'favicon.svg', 'logo.svg', 'demo.js', 'demo.css', 'run-locally.html', 'guide.css', 'vendor-licenses.txt']:
         shutil.copy2(ROOT / 'web' / name, output / name)
     shutil.copytree(ROOT / 'web/fonts', output / 'fonts')
     shutil.copytree(ROOT / 'demo/data', output / 'data')

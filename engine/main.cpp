@@ -104,6 +104,16 @@ struct Engine {
             auto & target = e.pending.layers[layer];
             if (kind == "Qcur" || kind == "Kcur" || kind == "Vcur" || kind == "wqkv") {
                 if (t->op == GGML_OP_MUL_MAT) target[kind == "wqkv" ? "raw_qkv" : kind == "Qcur" ? "raw_q" : kind == "Kcur" ? "raw_k" : "raw_v"] = read_tensor(t);
+                if (t->op == GGML_OP_ROPE && (kind == "Qcur" || kind == "Kcur")) {
+                    const std::string key = kind == "Qcur" ? "q" : "k";
+                    target["pre_rope_"+key] = read_tensor(t->src[0]);
+                    Tensor params; params.ne[0]=6;
+                    const auto * ints = reinterpret_cast<const int32_t *>(t->op_params);
+                    params.data = {float(ints[1]), float(ints[2])};
+                    for (int i=5; i<=8; ++i) { float value; std::memcpy(&value, ints+i, sizeof(value)); params.data.push_back(value); }
+                    target["rope_params_"+key] = std::move(params);
+                    if (t->src[2]) target["rope_factors_"+key] = read_tensor(t->src[2]);
+                }
                 return true;
             }
             // Cache operands are read after their real F16 cache writes.
@@ -262,7 +272,17 @@ struct Engine {
             matrices["va"] = matrix(dim, s.count, [&](int r,int c) { return h.at(r,c,selected_head); });
             matrices["kc"] = matrix(dim, n, [&](int r,int c) { return ck.at(r,c,kv); });
             matrices["vc"] = matrix(dim, n, [&](int r,int c) { return cv.at(c,r,kv); });
-            timeline.push_back({{"start", s.start}, {"count", s.count}, {"ms", s.ms}, {"matrices", std::move(matrices)}});
+            json explanation = json::object();
+            for (const std::string kind : {"q", "k"}) {
+                if (!l.count("pre_rope_"+kind) || !l.count("rope_params_"+kind)) continue;
+                const auto & pre=l.at("pre_rope_"+kind); const auto & params=l.at("rope_params_"+kind).data;
+                const int head=kind=="q"?selected_head:kv;
+                explanation[kind] = {{"before",matrix(dim,s.count,[&](int r,int c){return pre.at(r,head,c);})},
+                    {"dimensions",params[0]},{"type",params[1]},{"base",params[2]},{"scale",params[3]},
+                    {"extension",params[4]},{"magnitude",params[5]}};
+                if(l.count("rope_factors_"+kind)) explanation[kind]["factors"]=l.at("rope_factors_"+kind).data;
+            }
+            timeline.push_back({{"start", s.start}, {"count", s.count}, {"ms", s.ms}, {"matrices", std::move(matrices)}, {"explanation",std::move(explanation)}});
         }
         double total_ms = 0; for (const auto & s : steps) total_ms += s.ms;
         return {{"model", info()}, {"weights", weights()}, {"tokens", pieces}, {"steps", timeline}, {"layer", selected_layer},

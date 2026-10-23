@@ -7,7 +7,8 @@
   }
   function axis(size,edge){
     if(size<=2*edge+1)return Array.from({length:size},(_,i)=>i);
-    return [...Array.from({length:edge},(_,i)=>i),null,...Array.from({length:edge},(_,i)=>size-edge+i)];
+    // Two display slots represent one omitted original-index range.
+    return [...Array.from({length:edge},(_,i)=>i),null,null,...Array.from({length:edge},(_,i)=>size-edge+i)];
   }
   function plan(rows,cols){
     if(!Number.isInteger(rows)||!Number.isInteger(cols)||rows<1||cols<1)throw Error('Invalid matrix dimensions');
@@ -19,7 +20,7 @@
     const colGap=colIndices.includes(null)?[edgeCols,cols-edgeCols-1]:null;
     return {rows,cols,edgeRows,edgeCols,rowIndices,colIndices,rowGap,colGap,cellWidth,cellHeight,
       padX:PAD_X,padY:PAD_Y,width:PAD_X+colIndices.length*cellWidth+1,height:PAD_Y+rowIndices.length*cellHeight+1,
-      retained:(rowIndices.length-(rowGap?1:0))*(colIndices.length-(colGap?1:0))};
+      retained:rowIndices.filter(x=>x!==null).length*colIndices.filter(x=>x!==null).length};
   }
   function extendPlan(base,rows,cols,{rowStart=0,colStart=0}={}){
     const extend=(indices,initial,size,start)=>start?Array.from({length:size-start},(_,i)=>start+i):[...indices,...Array.from({length:size-initial},(_,i)=>initial+i)];
@@ -46,8 +47,8 @@
     const rx=nc/2,ry=nr/2;
     const radius=diamond?Math.pow(Math.abs(ci+.5-nc/2)/rx,OMISSION_POWER)+Math.pow(Math.abs(ri+.5-nr/2)/ry,OMISSION_POWER):Infinity;
     const diamondHidden=radius<1;
-    const adjacentRowGap=p.rowGap&&Math.abs(ri-p.rowIndices.indexOf(null))===1;
-    const adjacentColGap=p.colGap&&Math.abs(ci-p.colIndices.indexOf(null))===1;
+    const adjacentRowGap=p.rowGap&&(ri===p.rowIndices.indexOf(null)-1||ri===p.rowIndices.lastIndexOf(null)+1);
+    const adjacentColGap=p.colGap&&(ci===p.colIndices.indexOf(null)-1||ci===p.colIndices.lastIndexOf(null)+1);
     const gapFade=(adjacentRowGap?.85:1)*(adjacentColGap?.85:1);
     const fade=(diamond?omissionFade(radius):1-.82*Math.pow(inward,1.3))*gapFade;
     return {row,col,rowRange,colRange,omitted:row===null||col===null||diamondHidden,diamondHidden,diamond:diamond?{cx:nc/2,cy:nr/2,rx,ry}:null,fade};

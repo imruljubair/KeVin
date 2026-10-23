@@ -176,7 +176,7 @@ class Handler(BaseHTTPRequestHandler):
             return self.reply(200, self.app.status())
         if path == "/api/trace":
             return self.reply(200 if self.app.trace else 404, self.app.trace or {"error": "No trace yet"})
-        files = {"/": "index.html", "/app.js": "app.js", "/matrix_proxy.js": "matrix_proxy.js", "/style.css": "style.css", "/favicon.svg": "favicon.svg", "/fonts/ArchitectsDaughter-Regular.ttf": "fonts/ArchitectsDaughter-Regular.ttf"}
+        files = {"/": "index.html", "/app.js": "app.js", "/matrix_proxy.js": "matrix_proxy.js", "/style.css": "style.css", "/appearance.css": "appearance.css", "/favicon.svg": "favicon.svg", "/fonts/ArchitectsDaughter-Regular.ttf": "fonts/ArchitectsDaughter-Regular.ttf"}
         if path not in files:
             return self.reply(404, {"error": "Not found"})
         file = ROOT / "web" / files[path]

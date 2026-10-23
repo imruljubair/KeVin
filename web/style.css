@@ -31,7 +31,7 @@ dialog{border:1px solid #dce4ef;border-radius:12px;padding:35px;width:min(560px,
 .math-link{fill:none;stroke:#4278bd;stroke-width:1;opacity:.65;stroke-linejoin:round}.math-link.hidden-link{stroke-dasharray:4 4;opacity:.5}.math-range{fill:#4278bd0c;stroke:#4278bd;stroke-width:1}.math-selected{fill:#8746b80c;stroke:#8746b8;stroke-width:1.5}.hidden-range{stroke-dasharray:4 4;fill:#71809710}#inspect-math code{display:block;font:11px/1.7 ui-monospace,monospace;color:#63418b;white-space:normal;margin-top:12px}#inspect-math small{display:block;font:10px/1.6 ui-sans-serif,system-ui;color:#718097;margin-top:7px}
 
 .w{background:#f2a368}.projection-operation{position:absolute;color:#637791;font:10px ui-monospace,monospace;white-space:nowrap}.scene.overview .projection-operation{display:none}.math-link{stroke-width:1.2;opacity:.72;stroke-linecap:round}.math-range{stroke-width:1.2;fill:#4278bd08}.math-selected{stroke:#238b8b;fill:#238b8b0c}
-#columns{position:absolute;inset:0;z-index:1}#connections{z-index:4}.math-link.hidden-link{opacity:.65}
+#columns{position:absolute;inset:0;z-index:1}#connections{z-index:6}.math-link.hidden-link{opacity:.65}
 /* The visualization has one camera; focused buttons must not start native scrolling. */
 #viewport{overflow:clip;overflow-anchor:none}
 
@@ -69,8 +69,8 @@ dialog{border:1px solid #dce4ef;border-radius:12px;padding:35px;width:min(560px,
 /* Compact, dockable memory grid. Totals stay visible; exact values and
    per-token bytes remain available on hover without widening grid cells. */
 .memory-array table{border-collapse:separate;border-spacing:1px;table-layout:fixed}
-.memory-array button{width:8px;min-width:8px;max-width:8px;height:8px;padding:0;border:.5px solid #ffffff80;border-radius:2px;overflow:hidden;font:6px/1 ui-monospace,monospace}
-.memory-array th button{height:10px;border:0;border-radius:0}
+.memory-array button{width:var(--memory-dot-size,12px);min-width:var(--memory-dot-size,12px);max-width:var(--memory-dot-size,12px);height:var(--memory-dot-size,12px);padding:0;border:.5px solid #ffffff80;border-radius:2px;overflow:hidden;font:6px/1 ui-monospace,monospace}
+.memory-array th button{height:16px;border:0;border-radius:0}
 .memory-array .memory-decode{border-left:1px solid #a8b5c4}
 .memory-array .memory-selected{outline:1px solid #238b8b;outline-offset:-1px}
 .memory-array .memory-omitted{font-size:7px;background:#edf1f6;border-color:transparent}
@@ -89,7 +89,7 @@ dialog{border:1px solid #dce4ef;border-radius:12px;padding:35px;width:min(560px,
 
 .matrix-annotations .input-token-label{font:10px ui-sans-serif,system-ui,sans-serif;fill:#465365;paint-order:stroke fill;stroke:#f4f6fa;stroke-width:2px;stroke-linejoin:round}
 
-/* Matrix names live in one foreground layer, above all matrices and links. */
+/* Matrix names sit above matrices; connection ribbons pass over the names. */
 #scene-labels{position:absolute;inset:0;z-index:5;pointer-events:none}
 .matrix .matrix-name{visibility:hidden}
 .scene-matrix-name{position:absolute;transform:translate(-100%,-50%);white-space:nowrap;pointer-events:none;color:#465365;font:400 calc(10px * var(--label-scale,1))/1.2 ui-sans-serif,system-ui,sans-serif;paint-order:stroke fill;-webkit-text-stroke:calc(4px * var(--label-scale,1)) #f4f6fa}
@@ -170,7 +170,7 @@ body:not(.has-trace) .camera-toolbar{display:none}
 @keyframes memory-column-added{0%,30%{background:#74b4e85c;box-shadow:inset 0 0 0 1px #5399d580}100%{background:transparent;box-shadow:none}}
 
 /* Original tensor indices describe the compact memory grid's dimensions. */
-.memory-array .memory-row-index{position:sticky;left:0;z-index:1;background:#f8fafd;min-width:18px;padding-right:3px;text-align:right;font:6px/8px ui-monospace,monospace;color:#73849a;font-weight:400}
+.memory-array .memory-row-index{position:sticky;left:0;z-index:1;background:#f8fafd;min-width:18px;padding-right:3px;text-align:right;font:9px/var(--memory-dot-size,12px) ui-monospace,monospace;color:#73849a;font-weight:400}
 .memory-array th button{overflow:visible;color:#73849a;font-weight:400;letter-spacing:-.35px}
 
 .memory-size-calculation{font:9px/1.4 ui-monospace,monospace;color:#73849a;margin:-2px 0 5px;overflow-wrap:anywhere}
@@ -199,3 +199,41 @@ html[data-font-style="architects-daughter"] .inspector p,
 html[data-font-style="architects-daughter"] #about-dialog p{font-family:"Architects Daughter",system-ui,sans-serif;font-size:13px}
 /* Values, math expressions, coordinates and small memory controls keep their
    original fonts except for the main diagram's proxy-value text above. */
+
+/* Equation-only overlay. Formulas stay readable as the camera moves; wheel
+   gestures over the card use the diagram's pan/zoom handler. */
+#cell-math-overlay{position:fixed;inset:0;pointer-events:none;z-index:18}
+.cell-math-panel{position:fixed;width:max-content;max-width:300px;pointer-events:auto;overflow:auto;overscroll-behavior:contain;padding:16px 18px;border:1px solid #dcded8;border-radius:4px;box-shadow:1px 3px 10px #49463014,0 1px 2px #4946300b;color:#334e6d;font-family:var(--handwriting-font,"Architects Daughter",sans-serif);font-size:13px;line-height:1.25;cursor:grab;scrollbar-width:thin;background-color:#fffefb;background-image:linear-gradient(#8ca8bf16 1px,transparent 1px),linear-gradient(90deg,#8ca8bf16 1px,transparent 1px);background-size:12px 12px;background-position:-1px -1px}
+/* Light graph paper, without a binding margin or punched holes. */
+.cell-math-formulas math{font-family:var(--handwriting-font,"Architects Daughter",sans-serif);font-size:var(--formula-text-size,13px);min-height:24px;padding:2px 0;margin:0;line-height:1.25;text-align:left}
+.cell-math-formulas :is(mi,mn,mtext){font-family:inherit;font-style:normal}.cell-math-formulas mi{math-style:normal}
+.cell-math-wire{position:fixed;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}.cell-math-wire path{stroke:#718eaf;stroke-width:1;fill:none;stroke-dasharray:3 3}
+.cell-math-badge{position:fixed;display:grid;place-items:center;min-width:27px;height:22px;padding:0 3px;border:0;background:#eef4ffef;color:#315f93;border-radius:3px;font:16px/1 var(--handwriting-font,"Architects Daughter",sans-serif);pointer-events:auto;cursor:pointer;white-space:nowrap;transition:none;box-shadow:none}
+/* Visible columns dock below their final cell. Row labels use the left margin.
+   A fine chevron follows the tape when an input is outside the current view. */
+.cell-math-badge.ribbon-operand{width:38px;height:22px;min-width:0;padding:0;border:1px solid #c8d7e6;border-radius:11px;background:#f8fbfff2;box-shadow:0 1px 3px #3555740a;color:#7892ad;text-shadow:none;overflow:visible;transition:background .12s,border-color .12s}
+.cell-math-badge.ribbon-operand:hover{background:#edf4fc;border-color:#93adc8;color:#466b91}
+.ribbon-indicator-arrow{position:absolute;left:1px;top:1px;width:18px;height:18px;overflow:visible;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ribbon-indicator-letter{position:absolute;left:18px;top:3px;font:14px/1 var(--handwriting-font,"Architects Daughter",sans-serif);white-space:nowrap;color:#46617f}
+.cell-math-badge.ribbon-operand.horizontal-indicator{height:18px;margin-top:2px;display:flex;align-items:center;justify-content:center;gap:0}.horizontal-indicator .ribbon-indicator-arrow{position:static;order:2;flex:none;width:14px;height:16px}.horizontal-indicator .ribbon-indicator-letter{position:static;order:1;font-size:12px}
+.cell-math-badge.ribbon-operand:focus-visible{outline:2px solid #709dd1;outline-offset:4px}
+@media(max-width:650px){.cell-math-panel{padding:12px 14px}}
+
+.horizontal-indicator.leftward-indicator{flex-direction:row-reverse}
+
+.cell-math-formulas math:has(mfrac){min-height:48px}
+.cell-math-formulas math:has(mtable){min-height:48px}
+
+/* Cell explanations take precedence over matrix names, including related ones. */
+.scene.selection-color-focus .scene-matrix-name{opacity:.18}
+
+/* Upward pointers sit above their variable, following the ribbon direction. */
+.cell-math-badge.ribbon-operand.upward-indicator{height:32px;border-radius:10px}
+.upward-indicator .ribbon-indicator-arrow{left:9px;top:0;width:18px;height:16px}
+.upward-indicator .ribbon-indicator-letter{left:0;right:0;top:16px;text-align:center;font-size:12px}
+
+/* Keep multiplication visibly separate from handwritten words and vectors. */
+.cell-math-formulas mo.math-product{font-family:serif;font-size:1.1em;font-weight:700}
+
+/* Approved interlocking KeVin mark; the SVG remains crisp at header size. */
+.brand img.brand-symbol{display:block;width:32px;height:32px;flex:none;object-fit:contain}

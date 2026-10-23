@@ -1,0 +1,99 @@
+/* KeVin appearance configuration
+   ==============================
+   Edit the values in :root below, save, then refresh the browser.
+   No npm build is needed. Restart Python once after installing this update.
+   Keep units (px) on sizes/widths. Set a border width to 0px to hide it.
+   Fonts: "Architects Daughter" is bundled and works offline. You can also use
+   system-ui, sans-serif, or ui-monospace, monospace. Other named fonts must be
+   installed on your machine or bundled separately to work on other machines.
+   Example: --cell-font: ui-monospace, monospace;
+   Matrix cells keep their current geometry; very large text may crowd them.
+   Diagram title/outline sizes compensate for zoom, as before.
+*/
+:root {
+  /* Fonts: change each independently, or change --handwriting-font once. */
+  --handwriting-font: "Architects Daughter", system-ui, sans-serif;
+  --ui-font: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --cell-font: var(--handwriting-font); /* Numbers inside the large matrices. */
+  --matrix-title-font: var(--handwriting-font); /* K, Q, V, Scores, A, etc. */
+  --diagram-label-font: var(--handwriting-font); /* Group brackets and step titles. */
+  --heading-font: var(--handwriting-font); /* Brand, welcome and dialog headings. */
+  --description-font: var(--handwriting-font); /* Inspector and About prose. */
+  --small-data-font: ui-monospace, monospace; /* Tiny memory grid and indices. */
+
+  /* Text sizes (CSS pixels). */
+  --ui-text-size: 12px; /* Base UI text; compact controls have separate size below. */
+  --control-text-size: 10px; /* Top buttons, labels and layer/head selectors. */
+  --prompt-text-size: 12px; /* Prefill text input; retains monospace. */
+  --cell-text-size: 10.5px;
+  --focused-cell-min-size: 9px; /* Minimum on-screen size for focused values when zoomed out. */
+  --matrix-title-size: 13px;
+  --matrix-index-size: 7px; /* Row/column coordinates beside the main matrices. */
+  --group-title-size: 13px; /* Projection, Attention, Value aggregation brackets. */
+  --step-title-size: 13px; /* Prefill / Decode step headings. */
+  --step-subtitle-size: 9px; /* Smaller text below step headings. */
+  --token-label-size: 10px; /* Token labels drawn alongside the matrices. */
+  --brand-text-size: 24px; /* KeVin logo text. */
+  --page-heading-size: 24px; /* Welcome and dialog titles. */
+  --section-heading-size: 20px; /* Inspector headings and About section titles. */
+  --description-text-size: 13px;
+  --memory-heading-size: 13px; /* Memory panel title. */
+  --memory-subheading-size: 11px; /* K/V headings inside memory panel. */
+  --memory-panel-width: 260px; /* Width when the memory panel is expanded. */
+  --memory-dot-size: 12px; /* Diameter of each K/V memory circle. */
+  --memory-cell-text-size: 8px; /* Token column indices above the circles. */
+  --memory-index-size: 9px; /* Feature row indices to the left of the circles. */
+  --formula-text-size: 15px; /* Math beside a selected cell; stays readable when zooming. */
+  --status-text-size: 9px; /* Bottom status line. */
+
+  /* Borders and lines. Matrix/connection widths stay stable while zooming.
+     Cell borders are in scene pixels and scale with the matrix cells. */
+  --matrix-border-width: 1px; /* Outer matrix contours and appended-token boundary. */
+  --cell-border-width: 0.7px; /* White separators between colored matrix cells. */
+  --connection-width: 1px; /* Attention ribbons and operand outlines. */
+  --name-connection-width: 1px; /* Lines shown when clicking a matrix title. */
+  --memory-connection-width: 1.2px; /* Lines linking memory to the selected matrix. */
+  --selection-border-width: 1.5px; /* Selected matrix outline. */
+  --control-border-width: 1px; /* Buttons, inputs, control groups. */
+  --panel-border-width: 1px; /* Memory/inspector panels, dialogs and camera toolbar. */
+  --group-border-width: 1px; /* Diagram group and timeline brackets. */
+  --memory-cell-border-width: 0.5px;
+  --control-corner-radius: 5px; /* Button/input corners, independent of panels. */
+  --panel-corner-radius: 8px;
+  --dialog-corner-radius: 12px;
+}
+
+/* Wiring below connects the settings to KeVin. Usually edit only :root above.
+   Kept outside the React bundle so experiments only require a page refresh. */
+html:root { font-family:var(--ui-font); font-size:var(--ui-text-size) }
+html:root .sequence-editor button,html:root .sequence-editor input,html:root .view-controls select { border-width:var(--control-border-width); border-radius:var(--control-corner-radius) }
+html:root .sequence-editor,html:root .view-controls { border-width:var(--control-border-width) }
+html:root .sequence-editor button,html:root .sequence-editor label,html:root .view-controls,html:root .view-controls select { font-size:var(--control-text-size) }
+html:root .sequence-editor input { font-size:var(--prompt-text-size) }
+html:root .matrix .proxy-value { font-family:var(--cell-font); font-size:var(--cell-text-size); font-weight:400; font-variant-numeric:normal }
+html:root .matrix .proxy-value.focus-number { font-size:max(var(--cell-text-size),calc(var(--focused-cell-min-size) * var(--label-scale,1))) }
+html:root .scene-matrix-name,html:root .matrix .matrix-name { font-family:var(--matrix-title-font); font-size:calc(var(--matrix-title-size) * var(--label-scale,1)) }
+html:root .matrix .proxy-axis { font-size:var(--matrix-index-size) }
+html:root .row-label .vertical-title,html:root .row-name { font-family:var(--diagram-label-font); font-size:var(--group-title-size) }
+html:root .timeline-header strong,html:root #decode-group { font-family:var(--diagram-label-font); font-size:var(--step-title-size) }
+html:root .timeline-header small { font-size:var(--step-subtitle-size) }
+html:root .matrix-annotations .input-token-label { font-size:var(--token-label-size) }
+html:root .brand strong { font-family:var(--heading-font); font-size:var(--brand-text-size) }
+html:root .empty-state h1,html:root dialog h1 { font-family:var(--heading-font); font-size:var(--page-heading-size) }
+html:root .inspector h2,html:root dialog h3 { font-family:var(--heading-font); font-size:var(--section-heading-size) }
+html:root .inspector p,html:root #about-dialog p { font-family:var(--description-font); font-size:var(--description-text-size) }
+html:root .memory-panel h3 { font-size:var(--memory-heading-size) }
+html:root .memory-panel h4 { font-size:var(--memory-subheading-size) }
+html:root .memory-array button { font-family:var(--small-data-font); font-size:var(--memory-cell-text-size) }
+html:root .memory-array td button { border-width:var(--memory-cell-border-width) }
+html:root .memory-array .memory-row-index { font-family:var(--small-data-font); font-size:var(--memory-index-size) }
+html:root footer { font-size:var(--status-text-size) }
+html:root .inspector,html:root .memory-panel,html:root dialog,html:root .camera-toolbar { border-width:var(--panel-border-width); border-radius:var(--panel-corner-radius) }
+html:root dialog { border-radius:var(--dialog-corner-radius) }
+html:root .row-label { border-left-width:var(--group-border-width) }
+html:root .row-label::after { border-top-width:var(--group-border-width); border-bottom-width:var(--group-border-width) }
+html:root .timeline-header { border-top-width:var(--group-border-width) }
+html:root .timeline-header::before,html:root .timeline-header::after { border-left-width:var(--group-border-width) }
+html:root .matrix.is-selected canvas { outline-width:var(--selection-border-width) }
+html:root .math-ribbon,html:root .math-range.range-outline,html:root .math-link { stroke-width:calc(var(--connection-width) * var(--label-scale,1)) }
+html:root .math-name-link { stroke-width:calc(var(--name-connection-width) * var(--label-scale,1)) }

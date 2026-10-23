@@ -5,7 +5,7 @@ import {startController} from './controller.mjs';
 const demo = Boolean(window.KevinDemo);
 const useUI=()=>useSyncExternalStore(uiStore.subscribe,uiStore.getSnapshot,uiStore.getSnapshot);
 function Header(){const ui=useUI();return (<><header className="topbar">
-    <a className="brand" href="./" aria-label="KeVin home"><span className="brand-symbol"><i></i><i></i></span><strong>KeVin<span>Key–Value Cache Inspection Tool</span></strong></a>
+    <a className="brand" href="./" aria-label="KeVin home"><img className="brand-symbol" src="./favicon.svg" alt="" aria-hidden="true" /><strong>KeVin<span>Key–Value Cache Inspection Tool</span></strong></a>
     <button id="model-button" className={"model-button"+(demo?" local-only":"")} disabled={ui.busy||ui.playing} onClick={()=>actions.openModel()} title={demo?"Local only · load another model":undefined} aria-description={demo?"Local only. Activate for installation instructions.":undefined}><span className={"status-dot"+(ui.ready?" ready":"")}></span><span id="model-name">{ui.modelName}</span><span className="chevron">⌄</span></button>
     <span className="local-badge">{demo?"RECORDED DEMO":"ON YOUR MACHINE"}</span>
     {demo&&<a className="run-local-link" href="run-locally.html">Run locally ↗</a>}
@@ -27,6 +27,7 @@ function Controls(){const ui=useUI();return (<><section className="control-rail"
       <span className="separator"></span>
       <label className="check"><input id="compact" type="checkbox" defaultChecked onChange={()=>actions.compact()} />Compact cache</label>
       <label className="check"><input id="numbers" type="checkbox" defaultChecked onChange={()=>actions.numbers()} />Numbers</label>
+      <label className="check" title="Enable cell and matrix calculation explanations"><input id="math-mode" type="checkbox" checked={ui.mathMode} onChange={event=>actions.mathMode(event.target.checked)} />Math</label>
     </div>
   </section></>);}
 const Viewport=memo(function Viewport(){return (<><main id="viewport" tabIndex="0" aria-label="KV cache visualization. Drag to pan; use zoom controls to inspect matrices.">
@@ -73,13 +74,13 @@ const AboutDialog=memo(function AboutDialog(){return (<><dialog id="about-dialog
     <h3>Every color comes from inference</h3><p>Keys and queries are captured after rotary position encoding. Cache heatmaps use the actual F16 cache operands. Attention colors are probabilities from the model’s softmax. Flash Attention is disabled for inspection.</p>
     <h3>A proxy for a large matrix</h3><p>Each block retains actual cells from its four corners. Corner depths follow the square roots of the real row and column counts. Original indices label the retained cells; shaded bands with ellipses stand for omitted ranges. The proxy grows wider or taller with the matrix, with a bounded prefill proxy followed by all generated entries. No cells are averaged.</p>
     <h3>Fading toward the hidden center</h3><p>Retained cells gradually fade as they approach an omitted range. A shaded gap has no displayed numerical value. Click a cell to inspect its original coordinates and captured precision. <strong>Numbers</strong> controls labels without changing the proxy, and labels appear when zoomed in enough to read.</p>
-    <h3>The same attention layout</h3><p>Kᵀ sits beside A, and V beside VA. Caches appear below the divider. New cache entries use the same simple matrix outline. Click projection, A, or VA cells to trace their math. Blue orthogonal connectors follow littleLLAMA’s style: solid lines connect displayed operands, dashed lines connect omitted ranges. <strong>Compact cache</strong> uses one shared Kᵀ/V operand and cache snapshot; each query still attends only to its own visible prefix.</p>
+    <h3>The same attention layout</h3><p>Kᵀ sits beside A, and V beside VA. Caches appear below the divider. New cache entries use the same simple matrix outline. Enable <strong>Math</strong>, then click projection, A, or VA cells to trace their math. With Math unchecked, clicks only focus matrices. Blue orthogonal connectors follow littleLLAMA’s style: solid lines connect displayed operands, dashed lines connect omitted ranges. <strong>Compact cache</strong> uses one shared Kᵀ/V operand and cache snapshot; each query still attends only to its own visible prefix.</p>
     <p>X and Q stay visible. <strong>Weights and K/V</strong> expands the real selected-head Wq/Wk/Wv weights and K/V projections. Orange weight blocks are shared across steps and use the same corner shading. Q/K apply RoPE, and K/V are rounded by the F16 cache write. These calculations run in the model whether the bracket is open or closed. Prefill proxy ranges stay fixed; every generated token is appended visibly. Non-compact decode columns show only added K/V rows and columns. Click a matrix to zoom smoothly.</p>
     <p>Generation uses greedy decoding. Query heads can share a KV head; switching heads preserves the inference timeline. The cache indicator reports logical tensor bytes, excluding allocation padding.</p>
   </dialog></>);});
 const RendererPanels=memo(function RendererPanels(){return (<>
 
-  <button id="memory-toggle" aria-controls="memory-panel" aria-expanded="true" hidden>Hide memory ›</button>
+  <button id="memory-toggle" aria-controls="memory-panel" aria-expanded="false" hidden>‹ KV memory</button>
   <aside id="memory-panel" className="memory-panel" aria-label="KV tensor memory" hidden>
     <h3>KV tensor memory</h3><div id="memory-context"></div>
     <div id="memory-total"></div><div id="memory-arrays"></div>
@@ -91,6 +92,7 @@ const RendererPanels=memo(function RendererPanels(){return (<>
     <button id="close-inspector" className="icon-button" aria-label="Close matrix explanation">×</button>
     <span className="eyebrow">INSIDE ATTENTION</span><h2 id="inspect-title"></h2><p id="inspect-description"></p><div id="inspect-shape"></div><p id="inspect-value" hidden></p><div id="inspect-math"></div><button id="focus-matrix">Focus matrix ↗</button>
   </aside>
+  <div id="cell-math-overlay" />
   <Toast/>
 
   <nav id="camera-toolbar" className="camera-toolbar" aria-label="Diagram navigation">

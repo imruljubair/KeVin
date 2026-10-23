@@ -1,3 +1,5 @@
+<img src="web/logo.svg" width="64" alt="KeVin logo">
+
 # KeVin
 
 **Key–Value Cache Inspection Tool.** KeVin (pronounced “Kevin”) is a standalone, local explorer of a real pretrained language model's KV cache. No training and no fabricated model activations.
@@ -10,9 +12,19 @@ and five generated tokens. All 30 layers and 9 query heads are available.
 Run locally for your own prompts, other supported models, and live generation.
 See [web demo development and publication](docs/web-demo.md).
 
-KeVin uses the visualization style of `littleLLAMA/out/llama-34324/full-forward-json.html`: compact spacing, short side titles, left matrix brackets, and two-decimal values. Compact cache is enabled by default, and the initial view opens at a readable zoom; Overview still fits the entire scene. It follows littleLLAMA's prefill/decode matrix layout, alignment, pastel colors, layer/head controls, zoom/pan, and cache hierarchy. Large matrices use dimension-aware proxies: four original corner slices, fixed shaded omission bands, and cells that fade toward the hidden center. **Numbers** displays the captured components in those slices.
+Explore the prefill/decode timeline, real attention matrices, and growing KV
+cache. Large matrices retain their original corner values with two-row or
+two-column omitted bands; no values are averaged. Matrix indices start at zero.
+Click a matrix to focus at 85%, or use Overview to fit the whole diagram.
 
-![KeVin displaying real SmolLM2 inputs and projection weights](docs/kavin-projection-overview.png)
+- **Compact cache** shares the growing K/V operands across decode steps.
+- **Numbers** displays actual corner values when zoomed in.
+- **Math** enables cell and matrix calculation cards; it starts unchecked.
+  RoPE selections highlight both paired outputs and show their 2 × 2 rotation.
+- **KV memory** opens a resizable panel with token slots, feature indices, and
+  logical FP16 byte counts. It starts collapsed.
+
+![KeVin with its matrix visualization and Math control](docs/kevin-overview.png)
 
 **Fonts:** Architects Daughter is the active style. The original style is preserved
 behind an internal code setting; see [appearance and undo/redo](docs/appearance.md).
@@ -41,7 +53,7 @@ If port 8765 is already in use, KeVin may already be running; open that URL inst
 2. Choose a model (or select **Use a GGUF link…**) and click **Load model**. Compatibility checks run automatically before downloading.
 3. Enter a short prompt and click **Prefill**.
 4. **Generate next token** adds a decode column. Play continues until paused, end of sequence, or the context limit.
-5. Change layer/query head without rerunning the model. Inspect a matrix to see its role and dependency links.
+5. Change layer/query head without rerunning the model. Enable **Math** to inspect cells or click matrix names for their formulas.
 
 Recommended first model:
 
@@ -63,22 +75,37 @@ The app runs one shared local model/session. Different browser tabs use that sam
 
 - **Orange:** real Wq/Wk/Wv weights for the selected query/KV heads, dequantized from GGUF storage.
 - **Green:** actual cached keys, after rotary position encoding and the F16 cache write.
-- **Pink:** actual cached values, after the F16 cache write.
-- **Yellow:** the current query operands.
+- **Purple:** actual cached values, after the F16 cache write.
+- **Gray:** post-RoPE query operands.
 - **Cyan:** actual softmax attention probabilities. Future positions are masked.
-- **Gray:** actual per-head attention output, before the output projection.
+- **Yellow:** normalized input and per-head attention output before the output projection.
 
-Kᵀ sits beside raw Scores, followed by column-wise softmax A; V sits beside VA. There is no duplicate cache section underneath. The right-side memory panel shows K/V slots and FP16 byte counts for the selected layer/KV head. Click a slot or token header to connect it to the diagram; Show values reveals two-decimal values, and the left panel edge can be dragged to resize it. In non-compact mode, each decode column shows only the new key row and value/cache columns, with their original coordinates. Earlier entries remain in their earlier columns. Appended strips have one simple outer outline; shared caches use a single boundary line, without per-cell append borders.
+Kᵀ sits beside raw Scores, followed by column-wise softmax A; V sits beside VA.
+In compact mode, shared cache operands grow by appending every generated
+position after the fixed prefill proxy. In non-compact mode, decode columns
+show only their added key rows and value columns; earlier slices remain in
+place. Query heads in the same GQA group share Wk/Wv and cached K/V.
 
-Each block preserves the matrix's orientation and uses a bounded proxy whose width and height grow with the original dimensions. Corner sizes follow the square-root ratio of rows to columns, with a budget of eight edge cells split between the two axes (two to six per axis). A 32 × 64 matrix retains three rows at each end and five columns at each end, yielding a 7 × 11 proxy including omission bands. Smaller prefill axes appear in full without duplicated entries. After prefill, its sampled indices, omitted ranges, cell sizes, and fading stay fixed. Every generated token is appended visibly; no additional token positions are hidden as the cache grows. Original indices identify every retained component; no values are averaged or invented. Fixed shaded bands represent omitted ranges, and retained cells fade toward them.
+Proxies retain at most four real cells at each edge. A 32 × 64 matrix retains
+three rows at each end and four columns at each end: an 8 × 10 display with
+two omitted slots on each compressed axis. The hidden bands represent original
+index ranges, not averages or sample values. Shading fades toward the center.
+Visible values use two decimal places; hover and exports retain captured
+precision. Architects Daughter is bundled locally.
 
-**Numbers** hides or shows labels without changing the proxy geometry. Displayed values use exactly two decimal places, including trailing zeros, matching the littleLLAMA reference. Values below 0.005 in magnitude display as 0.00; inspection and exports retain the full captured precision. Click a matrix to focus it with a smooth 340 ms zoom; hover or click a retained cell to inspect its full captured value and original coordinates. Clicking a shaded gap explains its omitted ranges. Color scales stay fixed across steps: signed activations use tanh with scale 0.35; attention uses square-root probability intensity.
+Enable **Math** for calculation ribbons and graph-paper formula cards. Selecting
+K or Q highlights both RoPE partners as `a` and `b`, traces weight operands
+`|c|`, `|d|` and input `|e|`, and shows the full sine/cosine rotation matrix.
+Scores, softmax A, VA, and cache copies have their own formulas. Omitted ranges
+stay symbolic. Cards prefer the right side and move below the selection when
+there is insufficient room. Wheel gestures over cards and variable labels pan
+the diagram; Ctrl/Command+wheel zooms. Escape or **Clear selection** dismisses
+an explanation. Disabling Math clears the cards and ribbons.
 
-**Compact cache** displays one shared growing K/V cache: the fixed prefill proxy followed by every generated row/column. Each attention calculation retains its original token prefix. X and Q are always visible above attention. **Weights and K/V** expands the shared Wq/Wk/Wv blocks and K/V projections; this section is open initially. X is the actual normalized input. Each weight block uses the same corner proxy and shading as activation matrices, with original indices and no averaging. Weight blocks appear once and are reused across token steps. Query heads in the same GQA group share Wk/Wv. Short matrix labels match littleLLAMA; the inspector explains RoPE and the F16 cache write. Layer, Head, and section brackets follow littleLLAMA’s hierarchy, with square matrix outlines and dark monospaced values. Full-dimension rendering is not included.
+Click a matrix name with Math enabled to show its matrix-level equation.
+See [cell and matrix math](docs/cell-math.md) for the formulas and trace metadata.
 
-![Actual dequantized Wq corner values](docs/kavin-weight-detail.png)
-
-Click **Scores**, **A**, or **VA**, or an individual retained cell, to inspect its math connections. Operand ranges are outlined and connected with solid lines; omitted portions use dashed outlines and connections. The inspector shows the softmax or weighted-sum formula. Scores connect the selected key row and query column. Softmax connects every causally visible score in that column, and weighted sums include the full visible token prefix, including hidden proxy spans. In non-compact mode, connections resolve the earlier cache slices across decode columns. Clicking a shaded region traces its index ranges without inventing a numerical value. Cache copy and transpose connections are also available. Selecting Q/K/V traces its full X column and relevant weight rows, including RoPE partners and hidden components. Selecting weights shows their use in the latest step. Blue orthogonal routes avoid unrelated matrix interiors, following littleLLAMA’s connector style. Click-to-zoom keeps the relevant operands in view; **Focus matrix** isolates one block.
+![Paired RoPE outputs and the graph-paper calculation card](docs/kevin-math.png)
 
 **Export trace** saves actual floating-point arrays for the selected layer/head, token IDs, timing, model source, and layout metadata. Exported activation values preserve captured precision regardless of the display mode. Weight exports contain the retained original GGUF corner values and their indices, rather than full weight matrices.
 
@@ -119,10 +146,18 @@ The inference bridge is isolated in a subprocess. A failed decode invalidates it
 ```bash
 python3 -m unittest discover -s tests -v
 KAVIN_TEST_MODEL=models/SmolLM2-135M-Q8_0.gguf python3 -m unittest discover -s tests -v
-node --check web/app.js
-node --test tests/matrix_proxy.test.cjs
+npm ci
+npm run build
+npm test
+python3 scripts/build_pages.py
 ```
 
 The real-model tests check selected-head weight slices, GQA weight sharing, and projection products against captured pre-RoPE matrix products with CPU activation quantization accounted for. They also check attention against full-dimensional Q/K calculations and value mixtures within F16 kernel tolerance, unchanged cache prefixes, grouped-query head mapping, layer switching, reset, and cached logits against an independent full-sequence inference context. Tests without `KAVIN_TEST_MODEL` skip inference tests; metadata tests do not need downloaded weights.
 
 Stop the server with Ctrl-C. Diagnostic inference logs are in `engine.log`.
+
+## Logo
+
+The interlocking teal mark is available as [SVG](web/logo.svg). The header and
+browser favicon share [favicon.svg](web/favicon.svg). Design references and the
+previous mark are preserved in `docs/branding/`.

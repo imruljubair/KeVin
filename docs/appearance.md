@@ -1,27 +1,50 @@
-# Reversible handwriting style
+# Appearance experiments
 
-KeVin defaults to Architects Daughter for matrix values (13px), diagram labels,
-branding, and explanatory headings. Main headings use 24px; inspector headings
-use 20px. Matrix geometry, controls, equations, coordinates and tiny memory
-labels retain their original sizing and fonts.
+Edit **`web/appearance.css`**. The commented `:root` section at the top is the
+configuration: font families, independent text sizes, matrix/cell/connection
+borders, panel borders and corner radii. The CSS below that section connects
+those values to the existing UI.
 
-## Internal undo / redo
+1. Start KeVin with `python3 -m kevin` from the repository folder.
+2. Edit a value, save the file, and refresh `http://127.0.0.1:8765/`.
+3. No npm build is needed for appearance edits, including Canvas cell borders.
+   When upgrading an older running server, restart it once to load the new
+   stylesheet route. Further appearance edits need only a page refresh.
 
-In `web/index.html`, set the HTML element's `data-font-style` attribute:
+For example:
 
-- `architects-daughter`: use the handwritten style (current setting).
-- `original`: restore the original fonts.
+```css
+--cell-text-size: 14px;          /* Values inside the matrices. */
+--matrix-title-size: 15px;       /* K, Q, V, Scores, A, etc. */
+--matrix-border-width: 2px;      /* Outer contours. */
+--cell-font: ui-monospace, monospace;
+```
 
-Refresh the page after changing this setting. There is no font selector in the
-UI and no browser preference overrides this internal setting.
+Keep `px` on sizes and widths; use nonnegative numbers. The renderer reads its
+Canvas widths at startup. Diagram contours compensate for camera zoom. Matrix
+cell geometry is unchanged, so oversized text can crowd the cells. Focused
+numbers are fitted using their configured rendered font size.
 
-The original `web/style.css` rules remain intact; the new rules are appended
-and apply only with `data-font-style="architects-daughter"`. The font is served locally for offline portability, using a single
-explicitly allowed static route under the existing security policy. Its source and OFL license are saved
-under `web/fonts/`.
+Architects Daughter is bundled locally, so the default works offline on other
+machines. System fonts use the listed fallbacks. A new named font needs to be
+installed on each machine or bundled before it can be portable.
 
-Exact pre-change copies of `web/index.html`, `web/app.js`, and `web/style.css`
-plus `kevin/server.py` (originally `kavin/server.py`) are in `docs/style-backups/before-architects-daughter/`. Prefer the internal attribute setting for
-visual undo/redo. Restoring those files also discards subsequent edits to them.
+The default configuration keeps Architects Daughter. Appearance settings now
+take precedence over the older `data-font-style` attribute. To experiment with
+system text, change the font variables here; there is no font selector in the UI.
 
-An already running server needs a restart to enable the new static font route.
+The initial settings are saved in `docs/style-backups/appearance-defaults.css`.
+To reset, copy that file over `web/appearance.css` and refresh. Save additional
+copies of your own experiments whenever desired. The complete implementation from before
+this configuration exists in Git history. Older font and pre-React snapshots
+remain in `docs/style-backups/before-architects-daughter/` and
+`backups/before-react-d3/`; restoring them also discards subsequent UI changes.
+
+The Pages build copies the same appearance file, so published builds use the
+same settings. Local experiments appear publicly only after publishing them.
+
+The current defaults use 15px formulas, a 260px expanded memory panel, 12px
+memory circles, and larger memory indices. Math and the memory panel start off
+and collapsed respectively. These view defaults live in the frontend code;
+`--memory-panel-width` and `--memory-dot-size` control their expanded appearance.
+The graph-paper background and label-arrow layout live in `web/style.css`.

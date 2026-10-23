@@ -30,7 +30,7 @@ jobs:
           npm ci
           npm run build
           npm test
-          python3 -m unittest discover -s tests -p 'test_models.py' -q
+          python3 -m unittest discover -s tests -p 'test_*.py' -q
       - name: Verify and build the recorded demo
         run: python3 scripts/build_pages.py
       - uses: actions/configure-pages@v5

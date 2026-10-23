@@ -5,8 +5,8 @@ const {matrixRange}=require('../web/matrix_proxy.js');
 
 test('approved 32 x 64 proxy retains exactly the original four corner slices',()=>{
   const p=plan(32,64);
-  assert.deepEqual(p.rowIndices,[0,1,2,null,29,30,31]);
-  assert.deepEqual(p.colIndices,[0,1,2,3,null,60,61,62,63]);
+  assert.deepEqual(p.rowIndices,[0,1,2,null,null,29,30,31]);
+  assert.deepEqual(p.colIndices,[0,1,2,3,null,null,60,61,62,63]);
   assert.deepEqual(p.rowGap,[3,28]);assert.deepEqual(p.colGap,[4,59]);
   assert.equal(p.retained,48);
 });
@@ -22,7 +22,7 @@ test('corner sampling caps each edge at four cells while keeping small axes inta
     assert.ok(p.edgeRows<=4&&p.edgeCols<=4);
     for(const indices of [p.rowIndices,p.colIndices])if(indices.includes(null)){
       assert.ok(indices.indexOf(null)<=4);
-      assert.ok(indices.length-indices.indexOf(null)-1<=4);
+      assert.ok(indices.length-indices.lastIndexOf(null)-1<=4);
     }
   }
   assert.deepEqual(plan(64,4).colIndices,[0,1,2,3]);
@@ -54,7 +54,7 @@ test('fading approaches the omitted center and is symmetric across corners',()=>
   assert.equal(cellAt(p,0,0).fade,1);
   assert.ok(cellAt(p,1,2).fade<=cellAt(p,0,0).fade);
   assert.ok(cellAt(p,2,3).fade<cellAt(p,1,2).fade);
-  assert.equal(cellAt(p,2,3).fade,cellAt(p,4,5).fade);
+  assert.equal(cellAt(p,2,3).fade,cellAt(p,5,6).fade);
   assert.equal(cellAt(plan(4,4),2,2).fade,1);
 });
 test('dimensions grow in bounded space rather than allocating the hidden center',()=>{
@@ -327,9 +327,9 @@ test('diamond omissions retain real outer corner cells without enlarging the pro
   assert.equal(p.width,25+cols*38+1);assert.equal(p.height,19+rows*24+1);
   for(const [r,c] of [[0,0],[0,cols-1],[rows-1,0],[rows-1,cols-1]])assert.equal(cellAt(p,r,c).omitted,false);
   const center=cellAt(p,1,Math.floor(cols/2)-1);
-  assert.equal(center.diamondHidden,true);assert.equal(center.omitted,true);
+  assert.equal(center.omitted,true);
   assert.equal(hitTest(p,p.padX+(Math.floor(cols/2)-.5)*p.cellWidth,p.padY+1.5*p.cellHeight).omitted,true);
-  assert.equal(regions(p,{r0:center.row,r1:center.row,c0:center.col,c1:center.col})[0].hidden,true);
+  assert.equal(regions(p,{r0:center.rowRange[0],r1:center.rowRange[1],c0:center.colRange[0],c1:center.colRange[1]})[0].hidden,true);
 });
 
 test('single-axis omissions are straight bands with uniform fading across the complete axis',()=>{
@@ -343,7 +343,7 @@ test('single-axis omissions are straight bands with uniform fading across the co
       assert.equal(item.fade,sameBand.fade);
     }
     assert.equal(cellAt(p,0,0).fade,1);
-    assert.ok(cellAt(p,rows===64?5:0,rows===64?0:5).fade<.3);
+    assert.ok(cellAt(p,rows===64?6:0,rows===64?0:6).fade<.3);
     const extended=extendPlan(p,rows,cols+2);
     for(let r=0;r<nr;r++)for(let c=0;c<nc;c++)assert.deepEqual(cellAt(extended,r,c),cellAt(p,r,c));
   }
@@ -457,4 +457,17 @@ test('selection outlines also leave horizontal omission transitions open',()=>{
   assert.ok(outlines[0].startsWith('M0,0h20'));assert.ok(!outlines[0].includes('M0,20h20'));
   assert.equal(outlines[1],'M0,20v10M20,20v10');
   assert.ok(outlines[2].startsWith('M0,50h20'));assert.ok(!outlines[2].includes('M0,30h20'));
+});
+
+test('each omitted axis spans two cells and selects the same original hidden range',()=>{
+  const p=plan(64,576);
+  for(const indices of [p.rowIndices,p.colIndices])assert.equal(indices.filter(x=>x===null).length,2);
+  const r=p.rowIndices.indexOf(null),c=p.colIndices.indexOf(null);
+  assert.deepEqual(cellAt(p,r,0).rowRange,cellAt(p,r+1,0).rowRange);
+  assert.deepEqual(cellAt(p,0,c).colRange,cellAt(p,0,c+1).colRange);
+  const band=regions(p,{r0:p.rowGap[0],r1:p.rowGap[1],c0:0,c1:0});
+  assert.equal(band.reduce((sum,r)=>sum+r.h,0),2*p.cellHeight);
+  const grown=extendPlan(p,64,577);
+  assert.deepEqual(grown.colIndices.slice(0,-1),p.colIndices);
+  assert.equal(grown.colIndices.at(-1),576);
 });
