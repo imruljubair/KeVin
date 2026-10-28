@@ -42,12 +42,12 @@ Requires Python 3.10+, Git, CMake 3.20+, and a C++17 compiler. On macOS, install
 git clone https://github.com/imruljubair/KeVin.git
 cd KeVin
 python3 scripts/setup.py
-python3 -m kevin
+./start
 ```
 
-Open <http://127.0.0.1:8765>. On macOS, `run.command` also starts an already built app.
+Open <http://127.0.0.1:8765>. `./start` forwards server options, for example `./start --port 0`. On macOS, `run.command` also starts an already built app.
 
-If port 8765 is already in use, KeVin may already be running; open that URL instead of launching it again. To start a separate instance on an available port, run `python3 -m kevin --port 0` and open the URL it prints.
+If port 8765 is already in use, KeVin may already be running; open that URL instead of launching it again. To start a separate instance on an available port, run `./start --port 0` and open the URL it prints.
 
 1. Click **Choose a model**.
 2. Choose a model (or select **Use a GGUF link…**) and click **Load model**. Compatibility checks run automatically before downloading.

@@ -1,0 +1,5 @@
+#!/bin/sh
+set -eu
+KEVIN_ROOT=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+cd "$KEVIN_ROOT"
+exec "${KEVIN_PYTHON:-python3}" -m kevin "$@"
