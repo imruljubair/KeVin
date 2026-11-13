@@ -308,10 +308,10 @@ export function isVectorOperand(op){
   return op.vector??(/row|column/i.test(op.role||'')||op.range.r0!==op.range.r1||op.range.c0!==op.range.c1);
 }
 
-// Match diagram labels: single bars mark vector operands; scalars stay plain.
+// Follow Latte: underline vector symbols and leave scalar components plain.
 export function vectorFormulaMarkup(explanation){
   const vectors=new Set([...(explanation.results||[{...explanation.result,label:'a'}]),...explanation.operands].filter(isVectorOperand).map(op=>op.label));
-  return (explanation.derivation||explanation.lines).map(formula=>formula.replace(/<mi mathvariant="normal">([a-e])<\/mi>/g,(markup,label)=>vectors.has(label)?row(mo('|'),markup,mo('|')):markup)).join('');
+  return (explanation.derivation||explanation.lines).map(formula=>formula.replace(/<mi mathvariant="normal">([a-e])<\/mi>/g,(markup,label)=>vectors.has(label)?`<munder accentunder="true" data-math-kind="vector">${markup}<mo stretchy="true">_</mo></munder>`:markup)).join('');
 }
 
 // Matrix-name selections use the actual matrix symbols, without cell variables.

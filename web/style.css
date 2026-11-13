@@ -225,7 +225,7 @@ html[data-font-style="architects-daughter"] #about-dialog p{font-family:"Archite
 .cell-math-formulas math:has(mtable){min-height:48px}
 
 /* Cell explanations take precedence over matrix names, including related ones. */
-.scene.selection-color-focus .scene-matrix-name{opacity:.18}
+.scene.selection-color-focus .scene-matrix-name{opacity:.6}
 
 /* Upward pointers sit above their variable, following the ribbon direction. */
 .cell-math-badge.ribbon-operand.upward-indicator{height:32px;border-radius:10px}
@@ -237,3 +237,31 @@ html[data-font-style="architects-daughter"] #about-dialog p{font-family:"Archite
 
 /* Approved interlocking KeVin mark; the SVG remains crisp at header size. */
 .brand img.brand-symbol{display:block;width:32px;height:32px;flex:none;object-fit:contain}
+
+.ribbon-indicator-letter[data-math-kind="vector"]{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-skip-ink:none}
+
+/* Math variables share an accent across their labels, ranges and ribbons. */
+[data-math-variable="a"]{--math-accent:#2864b2}
+[data-math-variable="b"]{--math-accent:#167368}
+[data-math-variable="c"]{--math-accent:#93508a}
+[data-math-variable="d"]{--math-accent:#9b591d}
+[data-math-variable="e"]{--math-accent:#6554a7}
+.math-range.range-outline[data-math-variable],.math-ribbon[data-math-variable]{stroke:var(--math-accent)}
+.math-range.range-fill[data-math-variable]:not(.hidden-range){fill:var(--math-accent);fill-opacity:.08}
+.cell-math-badge[data-math-variable]{color:var(--math-accent)}
+.cell-math-badge[data-math-variable] .ribbon-indicator-letter{color:inherit}
+.cell-math-badge.ribbon-operand[data-math-variable]{border-color:color-mix(in srgb,var(--math-accent) 32%,#dce4ef)}
+.cell-math-badge[data-math-variable]:hover{color:var(--math-accent)}
+
+.cell-math-panel:has(.cell-math-close){padding-inline-end:27px}
+.cell-math-close{position:absolute;inset-block-start:4px;inset-inline-end:4px;display:grid;place-items:center;width:18px;height:18px;padding:0;border:0;background:transparent;color:#526780;font:14px/1 system-ui,sans-serif}
+.cell-math-close:focus-visible{outline-offset:0}
+
+/* Hover links an equation term to its existing selection geometry. */
+.math-hover-term{cursor:default}
+.math-hover-term.math-hover-target{color:#214c84;background:#e2ecfa}
+.math-range.range-fill.math-hover-target:not(.hidden-range){fill-opacity:.22}
+.math-range.range-outline.math-hover-target,.math-ribbon.math-hover-target,.math-name-link.math-hover-target{stroke-opacity:1;stroke-width:calc(2.5px * var(--label-scale,1))}
+.cell-math-badge.math-hover-target{outline:2px solid var(--math-accent,#315f93);outline-offset:1px}
+.scene .scene-matrix-name.math-hover-target{background:#d5e5f8;color:#214c84}
+.scene.name-selection .matrix.math-hover-target .matrix-outline{stroke:#2864b2;stroke-opacity:1;stroke-width:calc(3px * var(--label-scale,1))}

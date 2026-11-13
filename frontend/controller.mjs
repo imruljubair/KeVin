@@ -14,6 +14,7 @@ const appearanceNumber = (name, fallback) => {
 const matrixBorder = appearanceNumber('--matrix-border-width', 1);
 const cellBorder = appearanceNumber('--cell-border-width', .7);
 const memoryConnection = appearanceNumber('--memory-connection-width', 1.2);
+const matrixAnnotationZoom = .45;
 const state = {mathMode:false,status:null, trace:null, busy:false, playing:false, validated:null, zoom:.6, x:10, y:5, width:0, height:0, blocks:new Map(), selected:null, showProjections:true};
 const colors = {k:[138,219,139],kt:[138,219,139],kc:[138,219,139],v:[181,94,184],vc:[181,94,184],q:[135,145,155],a:[0,181,226],scores:[0,181,226],va:[241,215,83],x:[241,215,83],wq:[242,163,104],wk:[242,163,104],wv:[242,163,104]};
 const descriptions = {
@@ -609,52 +610,106 @@ function focusSelectionColors(source,selected,math){
 function uniqueMathRegions(rects){
   return KavinProxy.mergeRegions([...new Map(rects.map(r=>[`${r.x}:${r.y}:${r.w}:${r.h}:${r.hidden}`,r])).values()]);
 }
-function drawRangeHighlights(svg,block,rects,selected=false){
+function drawRangeHighlights(svg,block,rects,selected=false,label){
+  const variable=label?{'data-math-variable':label}:{};
   for(const rect of rects){
     const classes='math-range'+(selected?' math-selected':'')+(rect.hidden?' hidden-range':'');
-    svg.append(svgElement('rect',{x:block.x+rect.x,y:block.y+rect.y,width:rect.w,height:rect.h,class:classes+' range-fill'}));
-    svg.append(svgElement('path',{d:KavinProxy.rangeOutline(rect,rects),transform:`translate(${block.x} ${block.y})`,class:classes+' range-outline','vector-effect':'non-scaling-stroke'}));
+    svg.append(svgElement('rect',{x:block.x+rect.x,y:block.y+rect.y,width:rect.w,height:rect.h,class:classes+' range-fill',...variable}));
+    svg.append(svgElement('path',{d:KavinProxy.rangeOutline(rect,rects),transform:`translate(${block.x} ${block.y})`,class:classes+' range-outline','vector-effect':'non-scaling-stroke',...variable}));
   }
 }
-let cellMathView=null;
-function clearCellMath(){cellMathView=null;$('cell-math-overlay').replaceChildren();}
+let cellMathView=null,mathHoverTargets=[];
+function clearMathHover(){
+  for(const target of mathHoverTargets)target.classList.remove('math-hover-target');
+  mathHoverTargets=[];
+}
+function bindMathHover(panel,targetsFor){
+  for(const symbol of panel.querySelectorAll('mi')){
+    const resolve=targetsFor(symbol.textContent);
+    if(!resolve)continue;
+    const term=symbol.closest('[data-math-kind="vector"]')||symbol;
+    term.classList.add('math-hover-term');
+    term.addEventListener('pointerenter',()=>{
+      clearMathHover();
+      mathHoverTargets=[term,...resolve()];
+      for(const target of mathHoverTargets)target.classList.add('math-hover-target');
+    });
+    term.addEventListener('pointerleave',clearMathHover);
+  }
+  panel.addEventListener('pointerleave',clearMathHover);
+}
+function clearCellMath(){clearMathHover();cellMathView=null;$('cell-math-overlay').replaceChildren();}
+function createMathPanel(label,markup,returnFocus){
+  const panel=text('aside','cell-math-panel');
+  panel.setAttribute('aria-label',label);
+  const close=text('button','cell-math-close','×');
+  close.type='button';
+  close.title='Close calculation (Esc)';
+  close.setAttribute('aria-label','Close calculation');
+  close.onclick=()=>{closeInspector();returnFocus?.focus({preventScroll:true});};
+  const formulas=text('div','cell-math-formulas');
+  formulas.innerHTML=markup;
+  panel.append(close,formulas);
+  panel.addEventListener('wheel',handleDiagramWheel,{passive:false});
+  return panel;
+}
 function showCellMath(source,item,links,providedExplanation){
   clearCellMath();
   const explanation=providedExplanation||cellExplanation(state.trace,state.timeline,source.index,source.key,item,links);
   if(!explanation)return;
-  const host=$('cell-math-overlay'),panel=text('aside','cell-math-panel');
-  panel.setAttribute('aria-label','Selected cell calculation');
-  // Keep the card equation-only; dismissal remains available via Esc,
-  // Clear selection, or clicking the selected cell again.
-  const formulas=text('div','cell-math-formulas');
-  formulas.innerHTML=vectorFormulaMarkup(explanation);
-  panel.append(formulas);
-  panel.addEventListener('wheel',handleDiagramWheel,{passive:false});
+  const host=$('cell-math-overlay'),panel=createMathPanel('Selected cell calculation',vectorFormulaMarkup(explanation),source.node);
   const wire=svgElement('svg',{'aria-hidden':'true',class:'cell-math-wire'}),line=svgElement('path',{});wire.append(line);host.append(wire,panel);
   const labels=[...(explanation.results||[{...explanation.result,label:'a',result:true}]),...explanation.operands].map(op=>{
     const badge=text('button','cell-math-badge'+(op.label==='a'?' result-badge':''),`(${op.label})`);
+    badge.dataset.mathVariable=op.label;
     badge.type='button';badge.onclick=()=>focusMathOperand(op);badge.setAttribute('aria-label',`Go to (${op.label}) ${op.role||'selected cell'}`);host.append(badge);
     badge.addEventListener('wheel',handleDiagramWheel,{passive:false});
     let pointer=null,letter=null;
     {
       const arrow=svgElement('svg',{'aria-hidden':'true',viewBox:'-14 -14 28 28',class:'ribbon-indicator-arrow'});
       pointer=svgElement('path',{d:'M-8 0H7M2 -4L7 0L2 4'});arrow.append(pointer);
-      letter=text('span','ribbon-indicator-letter');
-      letter.textContent=isVectorOperand(op)?`|${op.label}|`:op.label;
+      letter=text('span','ribbon-indicator-letter',op.label);
+      if(isVectorOperand(op))letter.dataset.mathKind='vector';
       badge.replaceChildren(arrow,letter);
     }
     return {...op,badge,pointer,letter};
   });
+  const variables=new Set(labels.map(op=>op.label));
+  bindMathHover(panel,letter=>variables.has(letter)?()=>[
+    ...$('connections').querySelectorAll(`[data-math-variable="${letter}"]`),
+    ...labels.filter(op=>op.label===letter).map(op=>op.badge),
+  ]:null);
   cellMathView={source,item,panel,wire,line,labels};positionCellMath();
 }
-function showMatrixMath(source){
+function showMatrixMath(source,operands){
   const markup=matrixFormulaMarkup(state.trace,source.key,source.index);if(!markup)return;
-  const host=$('cell-math-overlay'),panel=text('aside','cell-math-panel');
-  panel.setAttribute('aria-label','Matrix calculation');
-  const formulas=text('div','cell-math-formulas');formulas.innerHTML=markup;panel.append(formulas);
-  panel.addEventListener('wheel',handleDiagramWheel,{passive:false});
+  const host=$('cell-math-overlay'),panel=createMathPanel('Matrix calculation',markup,source.nameNode);
   const wire=svgElement('svg',{'aria-hidden':'true',class:'cell-math-wire'}),line=svgElement('path',{});
   wire.append(line);host.append(wire,panel);
+  const names={x:'X',wk:'Wk',wq:'Wq',wv:'Wv',k:'K',q:'Q',v:'V',kt:'Kᵀ',kc:'K cached',vc:'V cached',v_operand:'V',scores:'Scores',a:'A',va:'VA'};
+  const groups=new Map();
+  const add=(symbol,block)=>{
+    if(!symbol||!block)return;
+    if(!groups.has(symbol))groups.set(symbol,new Set());
+    groups.get(symbol).add(block);
+  };
+  for(const op of operands){
+    const target=state.blocks.get(`${op.index}:${op.key}`);
+    add(source.key==='kt'&&op.key==='k'?'K cached':names[op.key],target);
+  }
+  if(['wk','wq','wv'].includes(source.key)){
+    for(const key of [source.key.slice(1),'x'])add(names[key],state.blocks.get(`${source.index}:${key}`));
+  }
+  groups.set(names[source.key],new Set([source]));
+  if(source.key==='v_operand')add('V cached',source);
+  bindMathHover(panel,symbol=>{
+    const blocks=groups.get(symbol);if(!blocks)return null;
+    return ()=>{
+      const ids=new Set([...blocks].map(b=>`${b.index}:${b.key}`));
+      const links=[...$('connections').querySelectorAll('.math-name-link')].filter(path=>ids.has(path.dataset.target));
+      return [...blocks].flatMap(b=>[b.node,b.nameNode].filter(Boolean)).concat(links);
+    };
+  });
   cellMathView={source,panel,wire,line,labels:[],matrixName:true};positionCellMath();
 }
 function focusMathOperand(op){
@@ -681,6 +736,7 @@ function positionCellMath(){
   if(resultRects.length>1)anchor={left:Math.min(...resultRects.map(r=>r.left)),right:Math.max(...resultRects.map(r=>r.right)),top:Math.min(...resultRects.map(r=>r.top)),bottom:Math.max(...resultRects.map(r=>r.bottom))};
   const visible=anchor&&anchor.right>viewport.left&&anchor.left<viewport.right&&anchor.bottom>viewport.top&&anchor.top<viewport.bottom;
   panel.hidden=!visible;
+  if(!visible)clearMathHover();
   // SVG has no reflected HTML hidden property; use the actual attribute.
   wire.toggleAttribute('hidden',!visible);
   wire.style.clipPath=`inset(${viewport.top}px ${Math.max(0,innerWidth-viewport.right)}px ${Math.max(0,innerHeight-viewport.bottom)}px ${viewport.left}px)`;
@@ -770,7 +826,7 @@ function positionCellMath(){
     panel.style.maxHeight=Math.max(40,room)+'px';
   }
   const placement=placeCellPanel(anchor,{width:panel.offsetWidth,height:panel.offsetHeight},bounds);
-  if(!placement){panel.hidden=true;wire.setAttribute('hidden','');return;}
+  if(!placement){clearMathHover();panel.hidden=true;wire.setAttribute('hidden','');return;}
   panel.style.left=placement.x+'px';panel.style.top=placement.y+'px';
   const center={x:(anchor.left+anchor.right)/2,y:(anchor.top+anchor.bottom)/2},end={x:Math.max(placement.x,Math.min(center.x,placement.x+panel.offsetWidth)),y:Math.max(placement.y,Math.min(center.y,placement.y+panel.offsetHeight))};
   line.setAttribute('d',`M${center.x},${center.y}L${end.x},${end.y}`);
@@ -812,7 +868,7 @@ function drawNameConnections(block){
     const path=svgElement('path',{d,class:'math-name-link','data-source':`${block.index}:${block.key}`,'data-target':id});
     path.append(svgElement('title',{},operand.role));svg.append(path);
   }
-  showMatrixMath(block);
+  showMatrixMath(block,math.operands);
 }
 function drawConnections(index,key,item){
   clearCellMath();if(!state.mathMode)return;
@@ -831,7 +887,12 @@ function drawConnections(index,key,item){
   const selected=explanation?.results?uniqueMathRegions(explanation.results.flatMap(op=>(op.ranges||[op.range]).flatMap(range=>KavinProxy.regions(p,range)))):KavinProxy.regions(p,selection);
   if(cellFocused)focusSelectionColors(source,selected,math);
   source.resultFocusRects=explanation?.results?selected:null;if(source.resultFocusRects)markFocusedNumbers(source);
-  drawRangeHighlights(svg,source,selected,true);
+  if(explanation?.results){
+    for(const result of explanation.results){
+      const regions=uniqueMathRegions((result.ranges||[result.range]).flatMap(range=>KavinProxy.regions(p,range)));
+      drawRangeHighlights(svg,source,regions,true,result.label);
+    }
+  }else drawRangeHighlights(svg,source,selected,true,explanation?'a':undefined);
   if(!selected.length)return;
   const left=Math.min(...selected.map(r=>r.x)),right=Math.max(...selected.map(r=>r.x+r.w)),top=Math.min(...selected.map(r=>r.y)),bottom=Math.max(...selected.map(r=>r.y+r.h));
   const body=block=>({x:block.x+block.plan.padX,y:block.y+block.plan.padY,w:block.w-block.plan.padX,h:block.h-block.plan.padY});
@@ -849,7 +910,9 @@ function drawConnections(index,key,item){
     const target=state.blocks.get(`${operand.index}:${operand.key}`);if(!target)continue;
     const regions=uniqueMathRegions((operand.ranges||[operand.range]).flatMap(range=>KavinProxy.regions(target.plan,range)));
     if(!regions.length)continue;
-    drawRangeHighlights(svg,target,regions);
+    if(!explanation)drawRangeHighlights(svg,target,regions);
+    const label=operand.label??explanation?.operands.find(op=>op.index===operand.index&&op.key===operand.key&&
+      ['r0','r1','c0','c1'].every(axis=>op.range[axis]===operand.range[axis]))?.label;
     // One ribbon per logical operand, rather than overlapping ribbons for
     // every retained proxy slice. Highlights still distinguish hidden spans.
     const x=Math.min(...regions.map(r=>r.x)),y=Math.min(...regions.map(r=>r.y));
@@ -873,8 +936,16 @@ function drawConnections(index,key,item){
       ribbonDefs.append(gradient);
       const lift=Math.max(24,Math.min(72,Math.hypot(end.x-start.x,end.y-start.y)*.14));
       const ribbon=svgElement('path',{d:KavinProxy.ribbonConnection(start,end,sourceWidth,targetWidth,vertical,lift),class:'math-ribbon'+(hidden?' hidden-ribbon':''),fill:`url(#${id})`,filter:'url(#math-tape-shadow)','stroke-width':.75/state.zoom,'vector-effect':'none','data-source':`${index}:${key}`,'data-target':`${operand.index}:${operand.key}`});
+      if(label)ribbon.setAttribute('data-math-variable',label);
       ribbon.append(svgElement('title',{},detail));svg.append(ribbon);
     }
+  }
+  // Formula operands can include a scalar within a larger ribbon operand
+  // (for example, a score within the softmax column).
+  for(const op of explanation?.operands||[]){
+    const target=state.blocks.get(`${op.index}:${op.key}`);if(!target)continue;
+    const regions=uniqueMathRegions((op.ranges||[op.range]).flatMap(range=>KavinProxy.regions(target.plan,range)));
+    drawRangeHighlights(svg,target,regions,false,op.label);
   }
 }
 let cameraFrame=0,cameraTarget=null;
@@ -976,7 +1047,7 @@ function applyCamera(){
   for(const block of state.blocks.values()){
     const x=state.x+block.x*state.zoom,y=state.y+block.y*state.zoom;
     const visible=x+block.w*state.zoom>-60&&x<r.width+60&&y+block.h*state.zoom>-60&&y<r.height+60;
-    drawAnnotations(block,visible&&state.zoom>=.7-1e-6?$('numbers').checked?'values':'axes':'');
+    drawAnnotations(block,visible&&state.zoom>=matrixAnnotationZoom-1e-6?$('numbers').checked?'values':'axes':'');
     // CSS camera transforms also scale SVG viewports; compensate explicitly
     // so the outer contour remains one screen pixel at every zoom level.
     for(const line of block.node.querySelectorAll('.matrix-outline,.append-boundary')){

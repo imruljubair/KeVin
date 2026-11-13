@@ -167,16 +167,21 @@ test('RoPE derivations keep intermediates symbolic and only substitute known par
   assert.ok(joined.includes('<mtext>position</mtext><mo class="math-product" lspace="0.25em" rspace="0.25em">·</mo><mtext>frequency</mtext>'));
 });
 
-test('formula bars distinguish the softmax vector from its scalar score',()=>{
+const underlinedVector=label=>`<munder accentunder="true" data-math-kind="vector"><mi mathvariant="normal">${label}</mi><mo stretchy="true">_</mo></munder>`;
+
+test('formula underlines distinguish the softmax vector from scalar values',()=>{
   const markup=vectorFormulaMarkup(explanation('a',1,2));
-  assert.ok(markup.includes('<mo>|</mo><mi mathvariant="normal">b</mi><mo>|</mo>'));
-  assert.ok(!markup.includes('<mo>|</mo><mi mathvariant="normal">c</mi>'));
-  assert.ok(!markup.includes('<mo>|</mo><mi mathvariant="normal">a</mi>'));
+  assert.ok(markup.includes(underlinedVector('b')));
+  for(const label of ['a','c']){
+    assert.ok(markup.includes(`<mi mathvariant="normal">${label}</mi>`));
+    assert.ok(!markup.includes(underlinedVector(label)));
+  }
+  assert.ok(!markup.includes('<mo>|</mo>'));
 });
-test('both paired weight rows and the input column use bars in RoPE formulas',()=>{
+test('both paired weight rows and the input column are underlined in RoPE formulas',()=>{
   const markup=vectorFormulaMarkup(explanation('k',1,2));
-  for(const label of ['c','d','e'])assert.ok(markup.includes(`<mo>|</mo><mi mathvariant="normal">${label}</mi><mo>|</mo>`));
-  assert.ok(!markup.includes('<mo>|</mo><mi mathvariant="normal">u</mi>'));
+  for(const label of ['c','d','e'])assert.ok(markup.includes(underlinedVector(label)));
+  for(const label of ['a','b','u','v'])assert.ok(!markup.includes(underlinedVector(label)));
 });
 
 test('matrix formulas use matrix names and preserve the post-RoPE projection stage',()=>{
