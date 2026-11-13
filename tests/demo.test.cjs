@@ -25,15 +25,19 @@ function demo() {
   return {adapter: context.window.KevinDemo, nodes, requests};
 }
 
-test('recorded generation has correct prefix, cache bytes and a hard limit', async () => {
+for (const preset of ['short','medium','long']) test(`${preset} replay preserves cache and stops at ten decode steps`, async () => {
   const {adapter, nodes, requests} = demo();
   const status = await adapter.request('/api/status');
   assert.equal(status.model.name, 'SmolLM2-135M');
-  let trace = await adapter.request('/api/trace');
+  const choice = status.demoPresets.find(option => option.id === preset);
+  let trace = await adapter.request('/api/session', {op:'prefill', preset});
   const initial = trace.tokens.length;
+  assert.equal(initial, choice.tokenCount);
+  assert.equal(trace.prompt, choice.prompt);
+  assert.equal(trace.recording.preset, preset);
   assert.equal(trace.steps.length, 1);
   const firstKey = trace.steps[0].matrices.kc[0][0];
-  for (let step = 1; step <= 5; step++) {
+  for (let step = 1; step <= 10; step++) {
     trace = await adapter.request('/api/session', {op: 'step'});
     assert.equal(trace.tokens.length, initial + step);
     assert.equal(trace.steps.length, step + 1);
@@ -44,7 +48,7 @@ test('recorded generation has correct prefix, cache bytes and a hard limit', asy
   }
   assert.equal(adapter.atLimit(), true);
   const capped = await adapter.request('/api/session', {op: 'step'});
-  assert.equal(capped.tokens.length, initial + 5);
+  assert.equal(capped.tokens.length, initial + 10);
   assert.equal(nodes['#local-only-dialog'].open, true);
   assert.match(nodes['#local-only-description'].textContent, /locally/);
   assert.equal(requests.filter(url => url.endsWith('.gz')).length, 1, 'Reuse the current captured view');
@@ -65,4 +69,22 @@ test('layer and head switching preserves replay position, reset restores prefill
   assert.equal(adapter.atLimit(), false);
   await assert.rejects(adapter.request('/api/session', {op: 'view', layer: 30, head: 0}), /Invalid/);
   await assert.rejects(adapter.request('/api/load', {url: 'other-model'}), /locally/);
+});
+
+test('switching presets resets generation, retains the inspected head, and isolates cached views', async () => {
+  const {adapter, requests} = demo();
+  const short = await adapter.request('/api/session', {op:'view', layer:29, head:8});
+  await adapter.request('/api/session', {op:'step'});
+  const long = await adapter.request('/api/session', {op:'prefill', preset:'long'});
+  assert.equal(long.recording.step, 0);
+  assert.equal(long.layer, 29);
+  assert.equal(long.head, 8);
+  assert.ok(long.tokens.length > short.tokens.length);
+  assert.equal(long.steps[0].matrices.kc[0].length, long.tokens.length);
+  const back = await adapter.request('/api/session', {op:'prefill', preset:'short'});
+  assert.equal(back.recording.step, 0);
+  assert.equal(back.tokens.length, short.tokens.length);
+  assert.deepEqual(requests.filter(url=>url.endsWith('.gz')), [
+    'data/short/layer-29-head-8.json.gz', 'data/long/layer-29-head-8.json.gz',
+  ]);
 });

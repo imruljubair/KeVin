@@ -1,4 +1,5 @@
 """Exercise the actual Pages package, including project-relative assets."""
+import json
 import re
 import tempfile
 import unittest
@@ -21,7 +22,11 @@ class PagesPackage(unittest.TestCase):
                         continue
                     self.assertFalse(target.startswith("/"), target)
                     self.assertTrue((output / target).exists(), target)
-            self.assertEqual(len(list((output / "data").glob("layer-*-head-*.json.gz"))), 270)
+            catalog = json.loads((output / "data/manifest.json").read_text())
+            self.assertEqual([item["id"] for item in catalog["presets"]], ["short", "medium", "long"])
+            for preset in catalog["presets"]:
+                folder = output / "data" / preset["id"]
+                self.assertEqual(len(list(folder.glob("layer-*-head-*.json.gz"))), 270)
             self.assertIn("demo.js", (output / "index.html").read_text())
 
     def test_build_preserves_an_unrelated_nonempty_output_folder(self):

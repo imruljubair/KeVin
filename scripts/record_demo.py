@@ -9,7 +9,15 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
-def record(model, output, prompt="Once upon a time", limit=5):
+PRESETS = (
+    ("short", "Short", "Once upon a time"),
+    ("medium", "Medium", "The little robot looked up at the night sky and wondered"),
+    ("long", "Long", "On the first morning of summer, Maya found a small wooden box under the old oak tree. "
+     "She brushed the dirt from its lid and saw a note that said"),
+)
+
+
+def record(model, output, prompt="Once upon a time", limit=10):
     if limit < 1 or limit > 20:
         raise ValueError("Demo token limit must be between 1 and 20")
     output.mkdir(parents=True, exist_ok=True)
@@ -35,6 +43,8 @@ def record(model, output, prompt="Once upon a time", limit=5):
         frames.append(frame(trace))
         for _ in range(limit):
             trace = call({"op": "step"})
+            if len(trace["steps"]) == len(frames):
+                break
             frames.append(frame(trace))
             if trace["ended"] or trace["full"]:
                 break
@@ -59,11 +69,29 @@ def record(model, output, prompt="Once upon a time", limit=5):
             process.kill(); process.wait()
         process.stdout.close()
 
+def record_presets(model, output, limit):
+    presets = []
+    for key, label, prompt in PRESETS:
+        folder = output / key
+        record(model, folder, prompt, limit)
+        manifest = json.loads((folder / "manifest.json").read_text())
+        if manifest["generationLimit"] != limit:
+            raise ValueError(f"{label} prompt did not produce {limit} decode steps")
+        presets.append({"id": key, "label": label, "prompt": prompt,
+                        "tokenCount": len(manifest["frames"][0]["tokens"])})
+    (output / "manifest.json").write_text(json.dumps({
+        "schema": "kevin-recorded-presets-v1", "defaultPreset": "short", "presets": presets,
+    }, indent=2) + "\n")
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model", type=Path, required=True)
     parser.add_argument("--output", type=Path, default=ROOT / "demo/data")
     parser.add_argument("--prompt", default="Once upon a time")
-    parser.add_argument("--limit", type=int, default=5)
+    parser.add_argument("--limit", type=int, default=10)
+    parser.add_argument("--presets", action="store_true", help="Record all three web demo prompts")
     args = parser.parse_args()
-    record(args.model, args.output, args.prompt, args.limit)
+    if args.presets:
+        record_presets(args.model, args.output, args.limit)
+    else:
+        record(args.model, args.output, args.prompt, args.limit)

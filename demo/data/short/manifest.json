@@ -1,0 +1,530 @@
+{
+  "schema": "kevin-recorded-demo-v1",
+  "model": {
+    "name": "SmolLM2-135M",
+    "architecture": "llama",
+    "layers": 30,
+    "heads": 9,
+    "kv_heads": 3,
+    "head_dim": 64,
+    "context": 128,
+    "parameters": 134515008,
+    "backend": "llama.cpp \u00b7 CPU inspection",
+    "cache_type": "F16"
+  },
+  "prompt": "Once upon a time",
+  "generationLimit": 10,
+  "frames": [
+    {
+      "tokens": [
+        {
+          "id": 6403,
+          "text": "Once"
+        },
+        {
+          "id": 1980,
+          "text": " upon"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 655,
+          "text": " time"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 68.077917,
+      "cache_prefix_verified": false,
+      "logical_cache_bytes": 92160,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 6403,
+          "text": "Once"
+        },
+        {
+          "id": 1980,
+          "text": " upon"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 655,
+          "text": " time"
+        },
+        {
+          "id": 28,
+          "text": ","
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 140.335959,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 115200,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 6403,
+          "text": "Once"
+        },
+        {
+          "id": 1980,
+          "text": " upon"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 655,
+          "text": " time"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 665,
+          "text": " there"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 210.485209,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 138240,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 6403,
+          "text": "Once"
+        },
+        {
+          "id": 1980,
+          "text": " upon"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 655,
+          "text": " time"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 665,
+          "text": " there"
+        },
+        {
+          "id": 436,
+          "text": " was"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 277.856084,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 161280,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 6403,
+          "text": "Once"
+        },
+        {
+          "id": 1980,
+          "text": " upon"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 655,
+          "text": " time"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 665,
+          "text": " there"
+        },
+        {
+          "id": 436,
+          "text": " was"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 347.81883400000004,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 184320,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 6403,
+          "text": "Once"
+        },
+        {
+          "id": 1980,
+          "text": " upon"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 655,
+          "text": " time"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 665,
+          "text": " there"
+        },
+        {
+          "id": 436,
+          "text": " was"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 1838,
+          "text": " little"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 403.64254200000005,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 207360,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 6403,
+          "text": "Once"
+        },
+        {
+          "id": 1980,
+          "text": " upon"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 655,
+          "text": " time"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 665,
+          "text": " there"
+        },
+        {
+          "id": 436,
+          "text": " was"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 1838,
+          "text": " little"
+        },
+        {
+          "id": 8180,
+          "text": " girl"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 459.42250000000007,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 230400,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 6403,
+          "text": "Once"
+        },
+        {
+          "id": 1980,
+          "text": " upon"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 655,
+          "text": " time"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 665,
+          "text": " there"
+        },
+        {
+          "id": 436,
+          "text": " was"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 1838,
+          "text": " little"
+        },
+        {
+          "id": 8180,
+          "text": " girl"
+        },
+        {
+          "id": 3365,
+          "text": " named"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 527.6638330000001,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 253440,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 6403,
+          "text": "Once"
+        },
+        {
+          "id": 1980,
+          "text": " upon"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 655,
+          "text": " time"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 665,
+          "text": " there"
+        },
+        {
+          "id": 436,
+          "text": " was"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 1838,
+          "text": " little"
+        },
+        {
+          "id": 8180,
+          "text": " girl"
+        },
+        {
+          "id": 3365,
+          "text": " named"
+        },
+        {
+          "id": 14176,
+          "text": " Lily"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 587.3842910000001,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 276480,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 6403,
+          "text": "Once"
+        },
+        {
+          "id": 1980,
+          "text": " upon"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 655,
+          "text": " time"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 665,
+          "text": " there"
+        },
+        {
+          "id": 436,
+          "text": " was"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 1838,
+          "text": " little"
+        },
+        {
+          "id": 8180,
+          "text": " girl"
+        },
+        {
+          "id": 3365,
+          "text": " named"
+        },
+        {
+          "id": 14176,
+          "text": " Lily"
+        },
+        {
+          "id": 30,
+          "text": "."
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 650.6955820000001,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 299520,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 6403,
+          "text": "Once"
+        },
+        {
+          "id": 1980,
+          "text": " upon"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 655,
+          "text": " time"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 665,
+          "text": " there"
+        },
+        {
+          "id": 436,
+          "text": " was"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 1838,
+          "text": " little"
+        },
+        {
+          "id": 8180,
+          "text": " girl"
+        },
+        {
+          "id": 3365,
+          "text": " named"
+        },
+        {
+          "id": 14176,
+          "text": " Lily"
+        },
+        {
+          "id": 30,
+          "text": "."
+        },
+        {
+          "id": 2306,
+          "text": " She"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 704.037415,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 322560,
+      "ok": true
+    }
+  ],
+  "capturedAt": "2026-11-13T18:09:35.272722+00:00",
+  "source": {
+    "file": "SmolLM2-135M-Q8_0.gguf",
+    "url": "https://huggingface.co/ggml-org/SmolLM2-135M-GGUF/resolve/main/SmolLM2-135M-Q8_0.gguf"
+  }
+}

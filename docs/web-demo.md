@@ -1,14 +1,14 @@
 # GitHub Pages demo
 
-The browser edition uses a saved real inference session, not browser inference.
-It fixes SmolLM2 135M Q8_0, prompt `Once upon a time`, and five generated tokens.
+The browser edition replays real SmolLM2 135M Q8_0 inference. Choose a short (4 tokens),
+medium (11), or long (32) example prompt, each with ten recorded decode steps.
 All 30 layers and 9 query heads are recorded. View files are fetched on demand;
 visitors do not download the model or the entire recording to open the demo.
 
-Model selection and prompt editing are visibly local-only. Clicking them, or
-attempting generation beyond the limit, opens an explanation linking to
+Custom prompts and model selection are available in local KeVin.
+Attempting generation beyond the limit opens an explanation linking to
 `run-locally.html`. Locked actions remain focusable so keyboard users can reach
-the same information. Replay prefill restarts the recorded session. Zoom, pan,
+the same information. Changing the example or clicking Replay prefill restarts the selected recording. Zoom, pan,
 optional Math mode, matrix inspection, memory, compact mode, numbers, layer/head selection, and
 trace export work in the browser. Math starts unchecked and memory starts
 collapsed. Enable Math for paired RoPE selections, symbolic omitted ranges,
@@ -35,15 +35,16 @@ The local `python3 -m kevin` app does not load `demo.js` and has no demo limits.
 After building the real engine and downloading the supported model:
 
 ```sh
-python3 scripts/record_demo.py --model models/SmolLM2-135M-Q8_0.gguf
+python3 scripts/record_demo.py --presets --model models/SmolLM2-135M-Q8_0.gguf
 python3 scripts/build_pages.py
 npm test
 ```
 
 The recorder uses a separate engine process, so it does not change a running
-local session. `demo/data/manifest.json` records model identity, source,
+local session. `demo/data/manifest.json` lists the three prompt presets. Each
+preset directory has a manifest that records model identity, source,
 capture time, token-prefix metadata and the generation limit. Each compressed
-view contains the actual intermediate matrices for all six replay frames.
+view contains the actual intermediate matrices for all eleven replay frames.
 The recordings also include pre-RoPE inputs and runtime frequency metadata
 for the math cards. The build verifies all expected layer/head files before
 publishing and copies the current appearance configuration and SVG branding.

@@ -1,0 +1,1762 @@
+{
+  "schema": "kevin-recorded-demo-v1",
+  "model": {
+    "name": "SmolLM2-135M",
+    "architecture": "llama",
+    "layers": 30,
+    "heads": 9,
+    "kv_heads": 3,
+    "head_dim": 64,
+    "context": 128,
+    "parameters": 134515008,
+    "backend": "llama.cpp \u00b7 CPU inspection",
+    "cache_type": "F16"
+  },
+  "prompt": "On the first morning of summer, Maya found a small wooden box under the old oak tree. She brushed the dirt from its lid and saw a note that said",
+  "generationLimit": 10,
+  "frames": [
+    {
+      "tokens": [
+        {
+          "id": 3280,
+          "text": "On"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 808,
+          "text": " first"
+        },
+        {
+          "id": 5738,
+          "text": " morning"
+        },
+        {
+          "id": 282,
+          "text": " of"
+        },
+        {
+          "id": 4018,
+          "text": " summer"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 14964,
+          "text": " Maya"
+        },
+        {
+          "id": 983,
+          "text": " found"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 1165,
+          "text": " small"
+        },
+        {
+          "id": 10091,
+          "text": " wooden"
+        },
+        {
+          "id": 3985,
+          "text": " box"
+        },
+        {
+          "id": 656,
+          "text": " under"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 1573,
+          "text": " old"
+        },
+        {
+          "id": 16033,
+          "text": " oak"
+        },
+        {
+          "id": 3187,
+          "text": " tree"
+        },
+        {
+          "id": 30,
+          "text": "."
+        },
+        {
+          "id": 2306,
+          "text": " She"
+        },
+        {
+          "id": 44792,
+          "text": " brushed"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 13472,
+          "text": " dirt"
+        },
+        {
+          "id": 429,
+          "text": " from"
+        },
+        {
+          "id": 624,
+          "text": " its"
+        },
+        {
+          "id": 19033,
+          "text": " lid"
+        },
+        {
+          "id": 284,
+          "text": " and"
+        },
+        {
+          "id": 3680,
+          "text": " saw"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 4109,
+          "text": " note"
+        },
+        {
+          "id": 338,
+          "text": " that"
+        },
+        {
+          "id": 1137,
+          "text": " said"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 105.716792,
+      "cache_prefix_verified": false,
+      "logical_cache_bytes": 737280,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 3280,
+          "text": "On"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 808,
+          "text": " first"
+        },
+        {
+          "id": 5738,
+          "text": " morning"
+        },
+        {
+          "id": 282,
+          "text": " of"
+        },
+        {
+          "id": 4018,
+          "text": " summer"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 14964,
+          "text": " Maya"
+        },
+        {
+          "id": 983,
+          "text": " found"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 1165,
+          "text": " small"
+        },
+        {
+          "id": 10091,
+          "text": " wooden"
+        },
+        {
+          "id": 3985,
+          "text": " box"
+        },
+        {
+          "id": 656,
+          "text": " under"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 1573,
+          "text": " old"
+        },
+        {
+          "id": 16033,
+          "text": " oak"
+        },
+        {
+          "id": 3187,
+          "text": " tree"
+        },
+        {
+          "id": 30,
+          "text": "."
+        },
+        {
+          "id": 2306,
+          "text": " She"
+        },
+        {
+          "id": 44792,
+          "text": " brushed"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 13472,
+          "text": " dirt"
+        },
+        {
+          "id": 429,
+          "text": " from"
+        },
+        {
+          "id": 624,
+          "text": " its"
+        },
+        {
+          "id": 19033,
+          "text": " lid"
+        },
+        {
+          "id": 284,
+          "text": " and"
+        },
+        {
+          "id": 3680,
+          "text": " saw"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 4109,
+          "text": " note"
+        },
+        {
+          "id": 338,
+          "text": " that"
+        },
+        {
+          "id": 1137,
+          "text": " said"
+        },
+        {
+          "id": 28,
+          "text": ","
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 170.518667,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 760320,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 3280,
+          "text": "On"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 808,
+          "text": " first"
+        },
+        {
+          "id": 5738,
+          "text": " morning"
+        },
+        {
+          "id": 282,
+          "text": " of"
+        },
+        {
+          "id": 4018,
+          "text": " summer"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 14964,
+          "text": " Maya"
+        },
+        {
+          "id": 983,
+          "text": " found"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 1165,
+          "text": " small"
+        },
+        {
+          "id": 10091,
+          "text": " wooden"
+        },
+        {
+          "id": 3985,
+          "text": " box"
+        },
+        {
+          "id": 656,
+          "text": " under"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 1573,
+          "text": " old"
+        },
+        {
+          "id": 16033,
+          "text": " oak"
+        },
+        {
+          "id": 3187,
+          "text": " tree"
+        },
+        {
+          "id": 30,
+          "text": "."
+        },
+        {
+          "id": 2306,
+          "text": " She"
+        },
+        {
+          "id": 44792,
+          "text": " brushed"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 13472,
+          "text": " dirt"
+        },
+        {
+          "id": 429,
+          "text": " from"
+        },
+        {
+          "id": 624,
+          "text": " its"
+        },
+        {
+          "id": 19033,
+          "text": " lid"
+        },
+        {
+          "id": 284,
+          "text": " and"
+        },
+        {
+          "id": 3680,
+          "text": " saw"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 4109,
+          "text": " note"
+        },
+        {
+          "id": 338,
+          "text": " that"
+        },
+        {
+          "id": 1137,
+          "text": " said"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 619,
+          "text": " \u201c"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 332.389,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 783360,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 3280,
+          "text": "On"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 808,
+          "text": " first"
+        },
+        {
+          "id": 5738,
+          "text": " morning"
+        },
+        {
+          "id": 282,
+          "text": " of"
+        },
+        {
+          "id": 4018,
+          "text": " summer"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 14964,
+          "text": " Maya"
+        },
+        {
+          "id": 983,
+          "text": " found"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 1165,
+          "text": " small"
+        },
+        {
+          "id": 10091,
+          "text": " wooden"
+        },
+        {
+          "id": 3985,
+          "text": " box"
+        },
+        {
+          "id": 656,
+          "text": " under"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 1573,
+          "text": " old"
+        },
+        {
+          "id": 16033,
+          "text": " oak"
+        },
+        {
+          "id": 3187,
+          "text": " tree"
+        },
+        {
+          "id": 30,
+          "text": "."
+        },
+        {
+          "id": 2306,
+          "text": " She"
+        },
+        {
+          "id": 44792,
+          "text": " brushed"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 13472,
+          "text": " dirt"
+        },
+        {
+          "id": 429,
+          "text": " from"
+        },
+        {
+          "id": 624,
+          "text": " its"
+        },
+        {
+          "id": 19033,
+          "text": " lid"
+        },
+        {
+          "id": 284,
+          "text": " and"
+        },
+        {
+          "id": 3680,
+          "text": " saw"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 4109,
+          "text": " note"
+        },
+        {
+          "id": 338,
+          "text": " that"
+        },
+        {
+          "id": 1137,
+          "text": " said"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 619,
+          "text": " \u201c"
+        },
+        {
+          "id": 57,
+          "text": "I"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 400.544541,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 806400,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 3280,
+          "text": "On"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 808,
+          "text": " first"
+        },
+        {
+          "id": 5738,
+          "text": " morning"
+        },
+        {
+          "id": 282,
+          "text": " of"
+        },
+        {
+          "id": 4018,
+          "text": " summer"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 14964,
+          "text": " Maya"
+        },
+        {
+          "id": 983,
+          "text": " found"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 1165,
+          "text": " small"
+        },
+        {
+          "id": 10091,
+          "text": " wooden"
+        },
+        {
+          "id": 3985,
+          "text": " box"
+        },
+        {
+          "id": 656,
+          "text": " under"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 1573,
+          "text": " old"
+        },
+        {
+          "id": 16033,
+          "text": " oak"
+        },
+        {
+          "id": 3187,
+          "text": " tree"
+        },
+        {
+          "id": 30,
+          "text": "."
+        },
+        {
+          "id": 2306,
+          "text": " She"
+        },
+        {
+          "id": 44792,
+          "text": " brushed"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 13472,
+          "text": " dirt"
+        },
+        {
+          "id": 429,
+          "text": " from"
+        },
+        {
+          "id": 624,
+          "text": " its"
+        },
+        {
+          "id": 19033,
+          "text": " lid"
+        },
+        {
+          "id": 284,
+          "text": " and"
+        },
+        {
+          "id": 3680,
+          "text": " saw"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 4109,
+          "text": " note"
+        },
+        {
+          "id": 338,
+          "text": " that"
+        },
+        {
+          "id": 1137,
+          "text": " said"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 619,
+          "text": " \u201c"
+        },
+        {
+          "id": 57,
+          "text": "I"
+        },
+        {
+          "id": 744,
+          "text": " am"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 475.99812499999996,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 829440,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 3280,
+          "text": "On"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 808,
+          "text": " first"
+        },
+        {
+          "id": 5738,
+          "text": " morning"
+        },
+        {
+          "id": 282,
+          "text": " of"
+        },
+        {
+          "id": 4018,
+          "text": " summer"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 14964,
+          "text": " Maya"
+        },
+        {
+          "id": 983,
+          "text": " found"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 1165,
+          "text": " small"
+        },
+        {
+          "id": 10091,
+          "text": " wooden"
+        },
+        {
+          "id": 3985,
+          "text": " box"
+        },
+        {
+          "id": 656,
+          "text": " under"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 1573,
+          "text": " old"
+        },
+        {
+          "id": 16033,
+          "text": " oak"
+        },
+        {
+          "id": 3187,
+          "text": " tree"
+        },
+        {
+          "id": 30,
+          "text": "."
+        },
+        {
+          "id": 2306,
+          "text": " She"
+        },
+        {
+          "id": 44792,
+          "text": " brushed"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 13472,
+          "text": " dirt"
+        },
+        {
+          "id": 429,
+          "text": " from"
+        },
+        {
+          "id": 624,
+          "text": " its"
+        },
+        {
+          "id": 19033,
+          "text": " lid"
+        },
+        {
+          "id": 284,
+          "text": " and"
+        },
+        {
+          "id": 3680,
+          "text": " saw"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 4109,
+          "text": " note"
+        },
+        {
+          "id": 338,
+          "text": " that"
+        },
+        {
+          "id": 1137,
+          "text": " said"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 619,
+          "text": " \u201c"
+        },
+        {
+          "id": 57,
+          "text": "I"
+        },
+        {
+          "id": 744,
+          "text": " am"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 544.986,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 852480,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 3280,
+          "text": "On"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 808,
+          "text": " first"
+        },
+        {
+          "id": 5738,
+          "text": " morning"
+        },
+        {
+          "id": 282,
+          "text": " of"
+        },
+        {
+          "id": 4018,
+          "text": " summer"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 14964,
+          "text": " Maya"
+        },
+        {
+          "id": 983,
+          "text": " found"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 1165,
+          "text": " small"
+        },
+        {
+          "id": 10091,
+          "text": " wooden"
+        },
+        {
+          "id": 3985,
+          "text": " box"
+        },
+        {
+          "id": 656,
+          "text": " under"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 1573,
+          "text": " old"
+        },
+        {
+          "id": 16033,
+          "text": " oak"
+        },
+        {
+          "id": 3187,
+          "text": " tree"
+        },
+        {
+          "id": 30,
+          "text": "."
+        },
+        {
+          "id": 2306,
+          "text": " She"
+        },
+        {
+          "id": 44792,
+          "text": " brushed"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 13472,
+          "text": " dirt"
+        },
+        {
+          "id": 429,
+          "text": " from"
+        },
+        {
+          "id": 624,
+          "text": " its"
+        },
+        {
+          "id": 19033,
+          "text": " lid"
+        },
+        {
+          "id": 284,
+          "text": " and"
+        },
+        {
+          "id": 3680,
+          "text": " saw"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 4109,
+          "text": " note"
+        },
+        {
+          "id": 338,
+          "text": " that"
+        },
+        {
+          "id": 1137,
+          "text": " said"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 619,
+          "text": " \u201c"
+        },
+        {
+          "id": 57,
+          "text": "I"
+        },
+        {
+          "id": 744,
+          "text": " am"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 2222,
+          "text": " student"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 605.593666,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 875520,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 3280,
+          "text": "On"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 808,
+          "text": " first"
+        },
+        {
+          "id": 5738,
+          "text": " morning"
+        },
+        {
+          "id": 282,
+          "text": " of"
+        },
+        {
+          "id": 4018,
+          "text": " summer"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 14964,
+          "text": " Maya"
+        },
+        {
+          "id": 983,
+          "text": " found"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 1165,
+          "text": " small"
+        },
+        {
+          "id": 10091,
+          "text": " wooden"
+        },
+        {
+          "id": 3985,
+          "text": " box"
+        },
+        {
+          "id": 656,
+          "text": " under"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 1573,
+          "text": " old"
+        },
+        {
+          "id": 16033,
+          "text": " oak"
+        },
+        {
+          "id": 3187,
+          "text": " tree"
+        },
+        {
+          "id": 30,
+          "text": "."
+        },
+        {
+          "id": 2306,
+          "text": " She"
+        },
+        {
+          "id": 44792,
+          "text": " brushed"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 13472,
+          "text": " dirt"
+        },
+        {
+          "id": 429,
+          "text": " from"
+        },
+        {
+          "id": 624,
+          "text": " its"
+        },
+        {
+          "id": 19033,
+          "text": " lid"
+        },
+        {
+          "id": 284,
+          "text": " and"
+        },
+        {
+          "id": 3680,
+          "text": " saw"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 4109,
+          "text": " note"
+        },
+        {
+          "id": 338,
+          "text": " that"
+        },
+        {
+          "id": 1137,
+          "text": " said"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 619,
+          "text": " \u201c"
+        },
+        {
+          "id": 57,
+          "text": "I"
+        },
+        {
+          "id": 744,
+          "text": " am"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 2222,
+          "text": " student"
+        },
+        {
+          "id": 282,
+          "text": " of"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 677.7697069999999,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 898560,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 3280,
+          "text": "On"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 808,
+          "text": " first"
+        },
+        {
+          "id": 5738,
+          "text": " morning"
+        },
+        {
+          "id": 282,
+          "text": " of"
+        },
+        {
+          "id": 4018,
+          "text": " summer"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 14964,
+          "text": " Maya"
+        },
+        {
+          "id": 983,
+          "text": " found"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 1165,
+          "text": " small"
+        },
+        {
+          "id": 10091,
+          "text": " wooden"
+        },
+        {
+          "id": 3985,
+          "text": " box"
+        },
+        {
+          "id": 656,
+          "text": " under"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 1573,
+          "text": " old"
+        },
+        {
+          "id": 16033,
+          "text": " oak"
+        },
+        {
+          "id": 3187,
+          "text": " tree"
+        },
+        {
+          "id": 30,
+          "text": "."
+        },
+        {
+          "id": 2306,
+          "text": " She"
+        },
+        {
+          "id": 44792,
+          "text": " brushed"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 13472,
+          "text": " dirt"
+        },
+        {
+          "id": 429,
+          "text": " from"
+        },
+        {
+          "id": 624,
+          "text": " its"
+        },
+        {
+          "id": 19033,
+          "text": " lid"
+        },
+        {
+          "id": 284,
+          "text": " and"
+        },
+        {
+          "id": 3680,
+          "text": " saw"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 4109,
+          "text": " note"
+        },
+        {
+          "id": 338,
+          "text": " that"
+        },
+        {
+          "id": 1137,
+          "text": " said"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 619,
+          "text": " \u201c"
+        },
+        {
+          "id": 57,
+          "text": "I"
+        },
+        {
+          "id": 744,
+          "text": " am"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 2222,
+          "text": " student"
+        },
+        {
+          "id": 282,
+          "text": " of"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 731.620332,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 921600,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 3280,
+          "text": "On"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 808,
+          "text": " first"
+        },
+        {
+          "id": 5738,
+          "text": " morning"
+        },
+        {
+          "id": 282,
+          "text": " of"
+        },
+        {
+          "id": 4018,
+          "text": " summer"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 14964,
+          "text": " Maya"
+        },
+        {
+          "id": 983,
+          "text": " found"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 1165,
+          "text": " small"
+        },
+        {
+          "id": 10091,
+          "text": " wooden"
+        },
+        {
+          "id": 3985,
+          "text": " box"
+        },
+        {
+          "id": 656,
+          "text": " under"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 1573,
+          "text": " old"
+        },
+        {
+          "id": 16033,
+          "text": " oak"
+        },
+        {
+          "id": 3187,
+          "text": " tree"
+        },
+        {
+          "id": 30,
+          "text": "."
+        },
+        {
+          "id": 2306,
+          "text": " She"
+        },
+        {
+          "id": 44792,
+          "text": " brushed"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 13472,
+          "text": " dirt"
+        },
+        {
+          "id": 429,
+          "text": " from"
+        },
+        {
+          "id": 624,
+          "text": " its"
+        },
+        {
+          "id": 19033,
+          "text": " lid"
+        },
+        {
+          "id": 284,
+          "text": " and"
+        },
+        {
+          "id": 3680,
+          "text": " saw"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 4109,
+          "text": " note"
+        },
+        {
+          "id": 338,
+          "text": " that"
+        },
+        {
+          "id": 1137,
+          "text": " said"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 619,
+          "text": " \u201c"
+        },
+        {
+          "id": 57,
+          "text": "I"
+        },
+        {
+          "id": 744,
+          "text": " am"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 2222,
+          "text": " student"
+        },
+        {
+          "id": 282,
+          "text": " of"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 1638,
+          "text": " University"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 791.486332,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 944640,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 3280,
+          "text": "On"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 808,
+          "text": " first"
+        },
+        {
+          "id": 5738,
+          "text": " morning"
+        },
+        {
+          "id": 282,
+          "text": " of"
+        },
+        {
+          "id": 4018,
+          "text": " summer"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 14964,
+          "text": " Maya"
+        },
+        {
+          "id": 983,
+          "text": " found"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 1165,
+          "text": " small"
+        },
+        {
+          "id": 10091,
+          "text": " wooden"
+        },
+        {
+          "id": 3985,
+          "text": " box"
+        },
+        {
+          "id": 656,
+          "text": " under"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 1573,
+          "text": " old"
+        },
+        {
+          "id": 16033,
+          "text": " oak"
+        },
+        {
+          "id": 3187,
+          "text": " tree"
+        },
+        {
+          "id": 30,
+          "text": "."
+        },
+        {
+          "id": 2306,
+          "text": " She"
+        },
+        {
+          "id": 44792,
+          "text": " brushed"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 13472,
+          "text": " dirt"
+        },
+        {
+          "id": 429,
+          "text": " from"
+        },
+        {
+          "id": 624,
+          "text": " its"
+        },
+        {
+          "id": 19033,
+          "text": " lid"
+        },
+        {
+          "id": 284,
+          "text": " and"
+        },
+        {
+          "id": 3680,
+          "text": " saw"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 4109,
+          "text": " note"
+        },
+        {
+          "id": 338,
+          "text": " that"
+        },
+        {
+          "id": 1137,
+          "text": " said"
+        },
+        {
+          "id": 28,
+          "text": ","
+        },
+        {
+          "id": 619,
+          "text": " \u201c"
+        },
+        {
+          "id": 57,
+          "text": "I"
+        },
+        {
+          "id": 744,
+          "text": " am"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 2222,
+          "text": " student"
+        },
+        {
+          "id": 282,
+          "text": " of"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 1638,
+          "text": " University"
+        },
+        {
+          "id": 282,
+          "text": " of"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 845.156624,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 967680,
+      "ok": true
+    }
+  ],
+  "capturedAt": "2026-11-13T18:10:54.255268+00:00",
+  "source": {
+    "file": "SmolLM2-135M-Q8_0.gguf",
+    "url": "https://huggingface.co/ggml-org/SmolLM2-135M-GGUF/resolve/main/SmolLM2-135M-Q8_0.gguf"
+  }
+}

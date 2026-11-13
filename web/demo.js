@@ -2,17 +2,22 @@
 (() => {
   'use strict';
   const cache = new Map();
-  let manifestPromise, manifest, currentStep = 0, layer = 0, head = 0;
-  const ready = () => manifestPromise ||= fetch('data/manifest.json').then(async response => {
+  let catalogPromise, manifest, preset, currentStep = 0, layer = 0, head = 0;
+  async function readManifest(path) {
+    const response = await fetch(path);
     if (!response.ok) throw Error('Could not load the recorded demo. Please reload the page.');
-    manifest = await response.json();
-    return manifest;
-  });
+    return response.json();
+  }
+  const catalog = () => catalogPromise ||= readManifest('data/manifest.json');
+  async function selectPreset(id) {
+    const next = await readManifest(`data/${id}/manifest.json`);
+    preset = id; manifest = next; currentStep = 0;
+  }
   async function view() {
-    const m = await ready(), key = `${layer}:${head}`;
+    const m = manifest, key = `${preset}:${layer}:${head}`;
     let captured = cache.get(key);
     if (!captured) {
-      const response = await fetch(`data/layer-${layer}-head-${head}.json.gz`);
+      const response = await fetch(`data/${preset}/layer-${layer}-head-${head}.json.gz`);
       if (!response.ok) throw Error('Could not load this recorded layer/head. Please retry.');
       if (!('DecompressionStream' in window)) throw Error('This demo needs a browser with gzip stream support. Try an updated browser or run KeVin locally.');
       captured = await new Response(response.body.pipeThrough(new DecompressionStream('gzip'))).json();
@@ -22,20 +27,24 @@
     return {...captured, ...m.frames[currentStep], steps: captured.steps.slice(0, currentStep + 1),
       layer, head, kv_head: captured.kv_head, prompt: m.prompt,
       source: m.source, format: 'kavin-trace-v1', captured_at: m.capturedAt,
-      recording: {mode: 'recorded-inference', step: currentStep, limit: m.generationLimit}};
+      recording: {mode: 'recorded-inference', preset, step: currentStep, limit: m.generationLimit}};
   }
   function localOnly(reason = 'This feature is available when running KeVin locally.') {
     window.KevinUI.set({localOnlyMessage:reason,localOnlyOpen:true});
   }
   function atLimit() { return Boolean(manifest && currentStep >= manifest.generationLimit); }
   async function request(path, command) {
-    const m = await ready();
-    if (path === '/api/status') return {phase: 'ready', engine_ready: true, model: m.model, message: 'Recorded inference · fixed SmolLM2 demo'};
+    const choices = await catalog();
+    if (!manifest) await selectPreset(choices.defaultPreset);
+    const m = manifest;
+    if (path === '/api/status') return {phase: 'ready', engine_ready: true, model: m.model, demoPresets: choices.presets, message: 'Recorded inference · SmolLM2 demo'};
     if (path === '/api/trace') return view();
     if (path !== '/api/session') throw Error('Run KeVin locally to load models or run live inference.');
     if (command.op === 'prefill') {
-      if (command.prompt !== m.prompt) { localOnly('Run KeVin locally to enter your own prefill text.'); return view(); }
-      currentStep = 0;
+      const choice = choices.presets.find(option => command.preset ? option.id === command.preset : option.prompt === command.prompt);
+      if (!choice) { localOnly('Run KeVin locally to enter your own prefill text.'); return view(); }
+      if (choice.id !== preset) await selectPreset(choice.id);
+      else currentStep = 0;
     } else if (command.op === 'step') {
       if (atLimit()) localOnly(`You’ve explored all ${m.generationLimit} recorded tokens. Run KeVin locally to generate more.`);
       else currentStep++;

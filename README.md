@@ -7,8 +7,8 @@
 **[Try the web demo](https://imruljubair.github.io/KeVin/)** ·
 **[Run locally](https://imruljubair.github.io/KeVin/run-locally.html)**
 
-The web edition explores recorded SmolLM2 135M inference with a fixed prompt
-and five generated tokens. All 30 layers and 9 query heads are available.
+The web edition explores recorded SmolLM2 135M inference with three example prompts
+and ten decode steps per prompt. All 30 layers and 9 query heads are available.
 Run locally for your own prompts, other supported models, and live generation.
 See [web demo development and publication](docs/web-demo.md).
 

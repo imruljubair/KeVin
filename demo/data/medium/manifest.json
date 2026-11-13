@@ -1,0 +1,838 @@
+{
+  "schema": "kevin-recorded-demo-v1",
+  "model": {
+    "name": "SmolLM2-135M",
+    "architecture": "llama",
+    "layers": 30,
+    "heads": 9,
+    "kv_heads": 3,
+    "head_dim": 64,
+    "context": 128,
+    "parameters": 134515008,
+    "backend": "llama.cpp \u00b7 CPU inspection",
+    "cache_type": "F16"
+  },
+  "prompt": "The little robot looked up at the night sky and wondered",
+  "generationLimit": 10,
+  "frames": [
+    {
+      "tokens": [
+        {
+          "id": 504,
+          "text": "The"
+        },
+        {
+          "id": 1838,
+          "text": " little"
+        },
+        {
+          "id": 8085,
+          "text": " robot"
+        },
+        {
+          "id": 5328,
+          "text": " looked"
+        },
+        {
+          "id": 614,
+          "text": " up"
+        },
+        {
+          "id": 418,
+          "text": " at"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 3163,
+          "text": " night"
+        },
+        {
+          "id": 6376,
+          "text": " sky"
+        },
+        {
+          "id": 284,
+          "text": " and"
+        },
+        {
+          "id": 8679,
+          "text": " wondered"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 62.791792,
+      "cache_prefix_verified": false,
+      "logical_cache_bytes": 253440,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 504,
+          "text": "The"
+        },
+        {
+          "id": 1838,
+          "text": " little"
+        },
+        {
+          "id": 8085,
+          "text": " robot"
+        },
+        {
+          "id": 5328,
+          "text": " looked"
+        },
+        {
+          "id": 614,
+          "text": " up"
+        },
+        {
+          "id": 418,
+          "text": " at"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 3163,
+          "text": " night"
+        },
+        {
+          "id": 6376,
+          "text": " sky"
+        },
+        {
+          "id": 284,
+          "text": " and"
+        },
+        {
+          "id": 8679,
+          "text": " wondered"
+        },
+        {
+          "id": 732,
+          "text": " what"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 114.54975,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 276480,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 504,
+          "text": "The"
+        },
+        {
+          "id": 1838,
+          "text": " little"
+        },
+        {
+          "id": 8085,
+          "text": " robot"
+        },
+        {
+          "id": 5328,
+          "text": " looked"
+        },
+        {
+          "id": 614,
+          "text": " up"
+        },
+        {
+          "id": 418,
+          "text": " at"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 3163,
+          "text": " night"
+        },
+        {
+          "id": 6376,
+          "text": " sky"
+        },
+        {
+          "id": 284,
+          "text": " and"
+        },
+        {
+          "id": 8679,
+          "text": " wondered"
+        },
+        {
+          "id": 732,
+          "text": " what"
+        },
+        {
+          "id": 357,
+          "text": " it"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 182.93841700000002,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 299520,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 504,
+          "text": "The"
+        },
+        {
+          "id": 1838,
+          "text": " little"
+        },
+        {
+          "id": 8085,
+          "text": " robot"
+        },
+        {
+          "id": 5328,
+          "text": " looked"
+        },
+        {
+          "id": 614,
+          "text": " up"
+        },
+        {
+          "id": 418,
+          "text": " at"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 3163,
+          "text": " night"
+        },
+        {
+          "id": 6376,
+          "text": " sky"
+        },
+        {
+          "id": 284,
+          "text": " and"
+        },
+        {
+          "id": 8679,
+          "text": " wondered"
+        },
+        {
+          "id": 732,
+          "text": " what"
+        },
+        {
+          "id": 357,
+          "text": " it"
+        },
+        {
+          "id": 436,
+          "text": " was"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 235.47262500000002,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 322560,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 504,
+          "text": "The"
+        },
+        {
+          "id": 1838,
+          "text": " little"
+        },
+        {
+          "id": 8085,
+          "text": " robot"
+        },
+        {
+          "id": 5328,
+          "text": " looked"
+        },
+        {
+          "id": 614,
+          "text": " up"
+        },
+        {
+          "id": 418,
+          "text": " at"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 3163,
+          "text": " night"
+        },
+        {
+          "id": 6376,
+          "text": " sky"
+        },
+        {
+          "id": 284,
+          "text": " and"
+        },
+        {
+          "id": 8679,
+          "text": " wondered"
+        },
+        {
+          "id": 732,
+          "text": " what"
+        },
+        {
+          "id": 357,
+          "text": " it"
+        },
+        {
+          "id": 436,
+          "text": " was"
+        },
+        {
+          "id": 30,
+          "text": "."
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 286.72595900000005,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 345600,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 504,
+          "text": "The"
+        },
+        {
+          "id": 1838,
+          "text": " little"
+        },
+        {
+          "id": 8085,
+          "text": " robot"
+        },
+        {
+          "id": 5328,
+          "text": " looked"
+        },
+        {
+          "id": 614,
+          "text": " up"
+        },
+        {
+          "id": 418,
+          "text": " at"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 3163,
+          "text": " night"
+        },
+        {
+          "id": 6376,
+          "text": " sky"
+        },
+        {
+          "id": 284,
+          "text": " and"
+        },
+        {
+          "id": 8679,
+          "text": " wondered"
+        },
+        {
+          "id": 732,
+          "text": " what"
+        },
+        {
+          "id": 357,
+          "text": " it"
+        },
+        {
+          "id": 436,
+          "text": " was"
+        },
+        {
+          "id": 30,
+          "text": "."
+        },
+        {
+          "id": 657,
+          "text": " It"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 341.97933400000005,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 368640,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 504,
+          "text": "The"
+        },
+        {
+          "id": 1838,
+          "text": " little"
+        },
+        {
+          "id": 8085,
+          "text": " robot"
+        },
+        {
+          "id": 5328,
+          "text": " looked"
+        },
+        {
+          "id": 614,
+          "text": " up"
+        },
+        {
+          "id": 418,
+          "text": " at"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 3163,
+          "text": " night"
+        },
+        {
+          "id": 6376,
+          "text": " sky"
+        },
+        {
+          "id": 284,
+          "text": " and"
+        },
+        {
+          "id": 8679,
+          "text": " wondered"
+        },
+        {
+          "id": 732,
+          "text": " what"
+        },
+        {
+          "id": 357,
+          "text": " it"
+        },
+        {
+          "id": 436,
+          "text": " was"
+        },
+        {
+          "id": 30,
+          "text": "."
+        },
+        {
+          "id": 657,
+          "text": " It"
+        },
+        {
+          "id": 436,
+          "text": " was"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 394.97841700000004,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 391680,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 504,
+          "text": "The"
+        },
+        {
+          "id": 1838,
+          "text": " little"
+        },
+        {
+          "id": 8085,
+          "text": " robot"
+        },
+        {
+          "id": 5328,
+          "text": " looked"
+        },
+        {
+          "id": 614,
+          "text": " up"
+        },
+        {
+          "id": 418,
+          "text": " at"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 3163,
+          "text": " night"
+        },
+        {
+          "id": 6376,
+          "text": " sky"
+        },
+        {
+          "id": 284,
+          "text": " and"
+        },
+        {
+          "id": 8679,
+          "text": " wondered"
+        },
+        {
+          "id": 732,
+          "text": " what"
+        },
+        {
+          "id": 357,
+          "text": " it"
+        },
+        {
+          "id": 436,
+          "text": " was"
+        },
+        {
+          "id": 30,
+          "text": "."
+        },
+        {
+          "id": 657,
+          "text": " It"
+        },
+        {
+          "id": 436,
+          "text": " was"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 448.71387500000003,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 414720,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 504,
+          "text": "The"
+        },
+        {
+          "id": 1838,
+          "text": " little"
+        },
+        {
+          "id": 8085,
+          "text": " robot"
+        },
+        {
+          "id": 5328,
+          "text": " looked"
+        },
+        {
+          "id": 614,
+          "text": " up"
+        },
+        {
+          "id": 418,
+          "text": " at"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 3163,
+          "text": " night"
+        },
+        {
+          "id": 6376,
+          "text": " sky"
+        },
+        {
+          "id": 284,
+          "text": " and"
+        },
+        {
+          "id": 8679,
+          "text": " wondered"
+        },
+        {
+          "id": 732,
+          "text": " what"
+        },
+        {
+          "id": 357,
+          "text": " it"
+        },
+        {
+          "id": 436,
+          "text": " was"
+        },
+        {
+          "id": 30,
+          "text": "."
+        },
+        {
+          "id": 657,
+          "text": " It"
+        },
+        {
+          "id": 436,
+          "text": " was"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 1838,
+          "text": " little"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 496.375083,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 437760,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 504,
+          "text": "The"
+        },
+        {
+          "id": 1838,
+          "text": " little"
+        },
+        {
+          "id": 8085,
+          "text": " robot"
+        },
+        {
+          "id": 5328,
+          "text": " looked"
+        },
+        {
+          "id": 614,
+          "text": " up"
+        },
+        {
+          "id": 418,
+          "text": " at"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 3163,
+          "text": " night"
+        },
+        {
+          "id": 6376,
+          "text": " sky"
+        },
+        {
+          "id": 284,
+          "text": " and"
+        },
+        {
+          "id": 8679,
+          "text": " wondered"
+        },
+        {
+          "id": 732,
+          "text": " what"
+        },
+        {
+          "id": 357,
+          "text": " it"
+        },
+        {
+          "id": 436,
+          "text": " was"
+        },
+        {
+          "id": 30,
+          "text": "."
+        },
+        {
+          "id": 657,
+          "text": " It"
+        },
+        {
+          "id": 436,
+          "text": " was"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 1838,
+          "text": " little"
+        },
+        {
+          "id": 4461,
+          "text": " blue"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 545.9277920000001,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 460800,
+      "ok": true
+    },
+    {
+      "tokens": [
+        {
+          "id": 504,
+          "text": "The"
+        },
+        {
+          "id": 1838,
+          "text": " little"
+        },
+        {
+          "id": 8085,
+          "text": " robot"
+        },
+        {
+          "id": 5328,
+          "text": " looked"
+        },
+        {
+          "id": 614,
+          "text": " up"
+        },
+        {
+          "id": 418,
+          "text": " at"
+        },
+        {
+          "id": 260,
+          "text": " the"
+        },
+        {
+          "id": 3163,
+          "text": " night"
+        },
+        {
+          "id": 6376,
+          "text": " sky"
+        },
+        {
+          "id": 284,
+          "text": " and"
+        },
+        {
+          "id": 8679,
+          "text": " wondered"
+        },
+        {
+          "id": 732,
+          "text": " what"
+        },
+        {
+          "id": 357,
+          "text": " it"
+        },
+        {
+          "id": 436,
+          "text": " was"
+        },
+        {
+          "id": 30,
+          "text": "."
+        },
+        {
+          "id": 657,
+          "text": " It"
+        },
+        {
+          "id": 436,
+          "text": " was"
+        },
+        {
+          "id": 253,
+          "text": " a"
+        },
+        {
+          "id": 1838,
+          "text": " little"
+        },
+        {
+          "id": 4461,
+          "text": " blue"
+        },
+        {
+          "id": 3925,
+          "text": " planet"
+        }
+      ],
+      "ended": false,
+      "full": false,
+      "total_ms": 591.133542,
+      "cache_prefix_verified": true,
+      "logical_cache_bytes": 483840,
+      "ok": true
+    }
+  ],
+  "capturedAt": "2026-11-13T18:10:01.563985+00:00",
+  "source": {
+    "file": "SmolLM2-135M-Q8_0.gguf",
+    "url": "https://huggingface.co/ggml-org/SmolLM2-135M-GGUF/resolve/main/SmolLM2-135M-Q8_0.gguf"
+  }
+}

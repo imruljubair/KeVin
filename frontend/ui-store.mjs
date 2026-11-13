@@ -6,7 +6,7 @@ let snapshot = {
   emptyTitle:'Choose a model',emptyDescription:'Load a model to inspect its KV cache.',
   emptyActionHidden:false,status:'Choose a model to begin',metrics:'LOCAL INFERENCE · NO TRAINING',
   modelLoading:false,loadLabel:'Load model',customModel:false,validation:'',
-  progressVisible:false,progress:0,progressMessage:'',toast:'',demoLimit:false,
+  progressVisible:false,progress:0,progressMessage:'',toast:'',demoLimit:false,demoPresets:[],
   localOnlyMessage:'',localOnlyOpen:false
 };
 const listeners = new Set();

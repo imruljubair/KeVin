@@ -60,7 +60,7 @@ function refreshControls(){
 function applyStatus(status){
   state.status=status;
   uiStore.set({status:status.message,modelName:status.model?.name||'Choose a model',
-    layerCount:status.model?.layers||0,headCount:status.model?.heads||0});
+    layerCount:status.model?.layers||0,headCount:status.model?.heads||0,demoPresets:status.demoPresets||[]});
   updateEmptyState();refreshControls();
 }
 async function getStatus(){const s=await api('/api/status');applyStatus(s);return s;}
@@ -104,12 +104,12 @@ actions.loadModel=async()=>{
   finally{uiStore.set({modelLoading:false,progressVisible:false});setBusy(false);updateEmptyState();if(loaded)$('prompt').focus();}
 };
 function tokenText(s){return s.replaceAll(' ','␣').replaceAll('\n','↵').replaceAll('\t','⇥')||'∅';}
-async function inference(command){setBusy(true);uiStore.set({status:command.op==='prefill'?'Processing prompt · capturing real activations…':command.op==='step'?'Decoding one token · appending K/V…':'Switching the inspected layer/head…'});
+async function inference(command){setBusy(true);uiStore.set({status:command.op==='prefill'?(DEMO?'Loading recorded prefill…':'Processing prompt · capturing real activations…'):command.op==='step'?'Decoding one token · appending K/V…':'Switching the inspected layer/head…'});
   try{const trace=await api('/api/session',command);state.trace=trace;state.animateAppend=command.op==='step';render();state.animateAppend=false;return trace;}
   catch(error){resetDiagram();toast(error.message);uiStore.set({status:error.message});throw error;}
   finally{setBusy(false);}
 }
-async function prefill(){if(state.busy||state.playing)return;closeInspector();try{await inference({op:'prefill',prompt:$('prompt').value});overview({animate:false});}catch{}}
+async function prefill(){if(state.busy||state.playing)return;closeInspector();try{await inference(DEMO?{op:'prefill',preset:$('demo-prompt').value}:{op:'prefill',prompt:$('prompt').value});overview({animate:false});}catch{}}
 actions.prefill=prefill;
 actions.step=async()=>{if(DEMO?.atLimit()){DEMO.localOnly('You’ve reached the recorded token limit. Run KeVin locally to generate more tokens.');return;}try{await inference({op:'step'});}catch{}};
 actions.play=async()=>{
@@ -1122,7 +1122,7 @@ async function init(){
     if(status.phase==='error')toast(status.message);
     if(!status.engine_ready)toast('Build the inference engine with python3 scripts/setup.py, then restart KeVin.');
     if(status.phase==='ready'){
-      const response=DEMO?{ok:true,json:()=>api('/api/trace')}:await fetch('/api/trace');if(response.ok){state.trace=await response.json();if(state.trace.prompt!==undefined)$('prompt').value=state.trace.prompt;render();overview({animate:false});refreshControls();}
+      const response=DEMO?{ok:true,json:()=>api('/api/trace')}:await fetch('/api/trace');if(response.ok){state.trace=await response.json();if(!DEMO&&state.trace.prompt!==undefined)$('prompt').value=state.trace.prompt;render();overview({animate:false});refreshControls();}
     }
   }catch(error){toast(error.message);}
 }

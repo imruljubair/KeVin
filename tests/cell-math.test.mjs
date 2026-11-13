@@ -5,7 +5,7 @@ import {gunzipSync} from 'node:zlib';
 import {createRequire} from 'node:module';
 import {cellExplanation,ropePair,ropeAngle,placeCellPanel,vectorFormulaMarkup,matrixFormulaMarkup,pairedRibbonLane} from '../frontend/cell-math.mjs';
 const require=createRequire(import.meta.url),proxy=require('../web/matrix_proxy.js');
-const trace=JSON.parse(gunzipSync(readFileSync(new URL('../demo/data/layer-0-head-0.json.gz',import.meta.url))));
+const trace=JSON.parse(gunzipSync(readFileSync(new URL('../demo/data/short/layer-0-head-0.json.gz',import.meta.url))));
 function explanation(key,r,c,index=0,t=trace){
   const timeline=proxy.layout(t,{compact:true,showProjections:true}),block=timeline.columns[index].blocks[key];
   const p=block.plan,item=proxy.cellAt(p,p.rowIndices.indexOf(r),p.colIndices.indexOf(c));
