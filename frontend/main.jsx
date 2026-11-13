@@ -15,7 +15,7 @@ function Controls(){const ui=useUI();return (<><section className="control-rail"
     <form id="prompt-form" className="sequence-editor" onSubmit={event=>{event.preventDefault();actions.prefill();}}>
       <label htmlFor={demo?"demo-prompt":"prompt"}>{demo?"Example prompt":"Prompt"}</label>
       {demo?<select id="demo-prompt" disabled={!ui.ready||ui.busy||ui.playing} title={ui.demoPresets[0]?.prompt} onChange={event=>{event.currentTarget.title=event.currentTarget.selectedOptions[0]?.title||"";actions.prefill();}}>
-        {ui.demoPresets.map(example=><option key={example.id} value={example.id} title={example.prompt}>{example.label} · {example.tokenCount} tokens</option>)}
+        {ui.demoPresets.map(example=><option key={example.id} value={example.id} title={example.prompt}>{example.prompt}</option>)}
       </select>:<input id="prompt" disabled={ui.busy||ui.playing} defaultValue="Once upon a time" autoComplete="off" maxLength="4000" placeholder="Enter a short prompt…" />}
       <button id="prefill" className="primary" type="submit" disabled={!ui.ready||ui.busy||ui.playing} title={demo?"Replay the selected prompt from the beginning":undefined}>{demo?"Replay prefill":"Prefill"} <span>↵</span></button>
       <span className="separator"></span>
